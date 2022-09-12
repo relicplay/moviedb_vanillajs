@@ -1,4 +1,21 @@
+:root {
 
+    --colorA: #916960;
+    --colorB: #FFE2DB;
+    --colorC: #DEB2A8;
+
+    --colorD: #51917A;
+    --colorE: #A9DECB;
+
+    --border: 2px solid black;
+    color: rgba(0,0,0,0.9);
+    background-color: var(--colorC);
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
 header {
     display: flex;
@@ -8,18 +25,43 @@ header {
     width: 100%;
     padding: 1rem;
     box-sizing: border-box;
-    background-color:red;
+    background-color: var(--colorA);
+    border-bottom: var(--border);
 }
 
 nav {
 
 }
 
+main {
+    min-height: 85vh;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding-top: 2rem;
+}
+
 footer {
-    background-color:red;
+    display: flex;
+    min-height: 100px;
+    background-color:var(--colorA);
+    border-top: var(--border);
 }
 
 .navlogo {
     width: 300px;
     height: auto;
+}
+
+.filterlist {
+    width: 20%;
+    height:200px;
+    background-color:green;
+}
+
+#movielist {
+    width: 60%;
+    height:200px;
+    background-color:green;
 }
