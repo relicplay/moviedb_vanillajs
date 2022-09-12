@@ -11,8 +11,8 @@ let data = [];
 
 (async () => {
     async function fetchData(myRequest) {
-  
       const response = await fetch(`${baseUrl}${myRequest}`);
+      
       const result = await response.json();
   
       return result;

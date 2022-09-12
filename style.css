@@ -1,0 +1,25 @@
+
+
+header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color:red;
+}
+
+nav {
+
+}
+
+footer {
+    background-color:red;
+}
+
+.navlogo {
+    width: 300px;
+    height: auto;
+}
