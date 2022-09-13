@@ -20,7 +20,11 @@ let data = [];
   
     data = await fetchData('&sort_by=popularity.desc');
     console.log(data);
-    clearContent("#movielist");
+    data.results.forEach(function(element) {
+      console.log(element);
+    });
+    
+    //clearContent("#movielist");
   })();
 
 
@@ -29,6 +33,24 @@ let data = [];
     targetElement.innerHTML='NEW ITEMS WILL APPEAR HERE:';
   }
 
+
+  /*
+
+  const displayMovies = (targetId, data) => {
+    clearContent(targetId);
+
+    const addItem = (item) => {
+      text += item;
+    }
+
+    let items = "";
+    data.forEach(addItem);
+
+    targetElement.innerHTML=items;
+
+  }
+  
+*/
 
 /*
 

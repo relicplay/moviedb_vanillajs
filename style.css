@@ -12,9 +12,18 @@
     background-color: var(--colorC);
 }
 
+input[type='checkbox'], label {
+    cursor: pointer;
+}
+
 body {
     margin: 0 !important;
     padding: 0 !important;
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-content: space-between;
 }
 
 header {
@@ -34,11 +43,11 @@ nav {
 }
 
 main {
-    min-height: 85vh;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
     box-sizing: border-box;
+    min-height: 70vh;
     padding-top: 2rem;
 }
 

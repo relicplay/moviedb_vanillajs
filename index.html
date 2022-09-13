@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie DB</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     
 </head>
 <body>
@@ -22,7 +22,12 @@
     <main>
 
         <section class="filterlist">
-            Filter options here:
+            <form>
+                <input type="checkbox" id="adult" name="adult" value="Adult">
+                <label for="adult"> Adult</label><br>
+                <input type="checkbox" id="video" name="video" value="Video">
+                <label for="video"> Video</label><br>
+              </form>
         </section>
         <section id="movielist">
             LIST OF ITEMS GOES HERE:
