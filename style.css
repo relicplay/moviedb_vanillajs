@@ -70,7 +70,19 @@ footer {
 }
 
 #movielist {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em 1em;
     width: 60%;
-    height:200px;
     background-color:green;
+}
+
+.item {
+    display: block;
+    box-sizing: border-box;
+    width: 150px;
+    height: 250px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
 }

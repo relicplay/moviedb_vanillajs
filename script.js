@@ -1,15 +1,9 @@
 const baseUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 
-/*
-let data = {}
-let size = Object.keys(data).length;
-console.log(size);
-*/
-
 let data = [];
 
 
-(async () => {
+const dataRequest = async (myRequest) => {
     async function fetchData(myRequest) {
       const response = await fetch(`${baseUrl}${myRequest}`);
       
@@ -18,20 +12,31 @@ let data = [];
       return result;
     }
   
-    data = await fetchData('&sort_by=popularity.desc');
+    data = await fetchData(myRequest);
     console.log(data);
     data.results.forEach(function(element) {
       console.log(element);
     });
     
-    //clearContent("#movielist");
-  })();
+    clearContent("#movielist");
+    displayResult("#movielist", data.results);
+  }
 
 
   const clearContent = (targetId) => {
     const targetElement = document.querySelector(targetId);
-    targetElement.innerHTML='NEW ITEMS WILL APPEAR HERE:';
+    targetElement.innerHTML='';
   }
+
+  const displayResult = (targetId, results) => {
+    const targetElement = document.querySelector(targetId);
+    results.forEach(function(element) {
+      targetElement.innerHTML+='<article class="item">ITEM X</article>';
+    });
+  }
+
+
+  dataRequest('&sort_by=popularity.desc');
 
 
   /*
