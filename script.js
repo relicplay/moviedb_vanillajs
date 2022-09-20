@@ -30,9 +30,34 @@ const dataRequest = async (myRequest) => {
 
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
-    results.forEach(function(element) {
-      targetElement.innerHTML+='<article class="item">ITEM X</article>';
+    results.forEach(function(element, index) {
+      addDomElement(
+        {
+          typeOfElement: "article", 
+          elementClass: "item", 
+          elementContent: `ITEM ${index+1}`,
+          elementId: `itembox${index}`, 
+          parentElement: "movielist"
+        }
+        );
+        addDomElement(
+          {
+            typeOfElement: "div", 
+            elementClass: "testclass", 
+            elementContent: `Title, Image, date, rating`,
+            parentElement: `itembox${index}`
+          }
+          );
     });
+  }
+
+  const addDomElement = (obj) => {
+      const e = document.createElement(obj.typeOfElement);
+      if (obj.elementClass) {e.setAttribute("class", obj.elementClass);}
+      if (obj.elementId) {e.setAttribute("id", obj.elementId);}
+      const textnode = obj.elementContent ? obj.elementContent : '';
+      e.appendChild(document.createTextNode(textnode));
+      document.getElementById(obj.parentElement).appendChild(e);
   }
 
 
