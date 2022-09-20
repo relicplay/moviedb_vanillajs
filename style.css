@@ -10,6 +10,8 @@
     --border: 2px solid black;
     color: rgba(0,0,0,0.9);
     background-color: var(--colorC);
+
+    --itembox-bgcolor: white;
 }
 
 input[type='checkbox'], label {
@@ -70,24 +72,45 @@ footer {
 }
 
 #movielist {
+    /*
     display: flex;
     flex-flow: row wrap;
     gap: 1em 1em;
     width: 60%;
+    max-width: 1200px;
+    */
     background-color:green;
+    width: 60%;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-.item {
-    display: block;
+.card {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
     box-sizing: border-box;
-    width: 150px;
-    height: 250px;
-    background-color: white;
+    width: 200px;
+    height: 350px;
+    background-color: var(--itembox-bgcolor);
     border: 2px solid black;
     border-radius: 10px;
+    transition: all 0.8s;
+}
+.card:hover {
+    background-color: red;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.card img {
+    width: 80%;
+    height: auto;
 }
 
 .testclass {
     display:block;
     background-color:red;
+    width: 80%;
 }

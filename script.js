@@ -1,4 +1,7 @@
 const baseUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
+const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
+
+let modal = true;
 
 let data = [];
 
@@ -31,37 +34,61 @@ const dataRequest = async (myRequest) => {
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
     results.forEach(function(element, index) {
+      //date, rating
       addDomElement(
         {
           typeOfElement: "article", 
-          elementClass: "item", 
-          elementContent: `ITEM ${index+1}`,
-          elementId: `itembox${index}`, 
+          elementClass: "card",
+          //elementContent: `ITEM ${index+1}`,
+          elementId: `itemcard${index}`, 
           parentElement: "movielist"
         }
         );
         addDomElement(
           {
+            typeOfElement: "img", 
+            elementClass: "thumbnail",
+            imgSrc: `${imgBaseUrl}${element.poster_path}`,
+            imgAlt: "Image",
+            parentElement: `itemcard${index}`
+          }
+        );
+        addDomElement(
+          {
             typeOfElement: "div", 
             elementClass: "testclass", 
-            elementContent: `Title, Image, date, rating`,
-            parentElement: `itembox${index}`
+            elementContent: element.title.replace(/^(.{11}[^\s]*).*/, "$1"),
+            parentElement: `itemcard${index}`
           }
-          );
+        );
+        addDomElement(
+          {
+            typeOfElement: "div", 
+            elementClass: "testclass", 
+            elementContent: element.release_date,
+            parentElement: `itemcard${index}`
+          }
+        );
+        document.getElementById(`itemcard${index}`).addEventListener("click", () => {alert (modal);});
+
     });
   }
 
   const addDomElement = (obj) => {
       const e = document.createElement(obj.typeOfElement);
-      if (obj.elementClass) {e.setAttribute("class", obj.elementClass);}
-      if (obj.elementId) {e.setAttribute("id", obj.elementId);}
+        if (obj.elementClass) {e.setAttribute("class", obj.elementClass);}
+        if (obj.elementId) {e.setAttribute("id", obj.elementId);}
+        if (obj.imgSrc) {e.setAttribute("src", obj.imgSrc);}
+        if (obj.imgAlt) {e.setAttribute("alt", obj.imgAlt);}
       const textnode = obj.elementContent ? obj.elementContent : '';
       e.appendChild(document.createTextNode(textnode));
       document.getElementById(obj.parentElement).appendChild(e);
   }
 
-
+  
   dataRequest('&sort_by=popularity.desc');
+
+  
 
 
   /*
