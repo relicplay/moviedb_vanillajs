@@ -36,11 +36,6 @@ const dataRequest = async (myRequest) => {
   }
 
 
-  const clearContent = (targetId) => {
-    const targetElement = document.querySelector(targetId);
-    targetElement.innerHTML='';
-  }
-
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
     results.forEach(function(element, index) {
@@ -79,7 +74,6 @@ const dataRequest = async (myRequest) => {
             parentElement: `itemcard${index}`
           }
         );
-        //() => {updateModalData();}
         document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalData(element);});
 
     });
@@ -104,12 +98,26 @@ const dataRequest = async (myRequest) => {
   const updateModalData = (singleMovieData) => {
     modalData = singleMovieData;
     const header = document.querySelector('.modal-header');
+    const movieDetailsList = document.querySelector('.modal-moviedetails');
     header.style.backgroundImage = `url(${imgBaseUrl}${modalData.backdrop_path})`;
-    header.querySelector('h1').textContent = modalData.title;
+    addTextContent(header, 'h1', modalData.title);
 
-    //const e = document.querySelector('.modal-moviedetails');
-    //e.appendChild(document.createTextNode(JSON.stringify(modalData)));
+    addTextContent(movieDetailsList, '#movieOgTitle', modalData.original_title);
+    addTextContent(movieDetailsList, '#movieDate', modalData.release_date);
+    addTextContent(movieDetailsList, '#movieOgLang', modalData.original_language);
+    addTextContent(movieDetailsList, '#movieAdult', modalData.adult ? 'Yes' : 'No');
+    addTextContent(movieDetailsList, '#movieOverview', modalData.overview);
+
     modal.style.display = "block";
+  }
+
+  const addTextContent = (parentElement, targetElement, txt) => {
+    return parentElement.querySelector(targetElement).textContent = txt;
+  }
+
+  const clearContent = (targetId) => {
+    const targetElement = document.querySelector(targetId);
+    targetElement.innerHTML='';
   }
 
   

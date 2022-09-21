@@ -31,6 +31,7 @@ h1 {
     font-size: var(--headerLarge);
 }
 
+
 input[type='checkbox'], label {
     cursor: pointer;
 }
@@ -155,13 +156,59 @@ footer {
 
   .modal-header {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     min-height: 300px;
-    padding: 0.3em 0 0 0.3em;
-    background-color:#000;
+    padding: 0.3em 0 0 2em;
+    background-color: #000;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border-bottom: 2px solid black;
+  }
+
+  .modal-header h1 {
+    display: block;
+    width: fit-content;
+    min-width: 50%;
+    letter-spacing: 0.1em;
+    text-shadow: .1em .1em 0 hsl(200 50% 30%);
+    color: hsl(200 50% 90%);
+    background-image: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .modal-moviedetails {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .modal-moviedetails div {
+    display: block;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 0.5em 1em;
+    /*background-color:yellow;*/
+    font-family: var(--headerFont);
+    font-size: var(--headerSmall);
+    font-weight: 700;
+  }
+
+  .modal-moviedetails div:nth-child(even) {
+    /*background-color:blue;*/
+    text-align: right;
+    font-weight: normal;
+  }
+
+  .modal-moviedetails div:nth-last-child(1), .modal-moviedetails div:nth-last-child(2) {
+    width: 100%;
+    text-align: left;
+  }
+
+  .modal-moviedetails div:nth-last-child(1) {
+    font-style: italic;
   }
   
   .close-modal {
@@ -182,6 +229,7 @@ footer {
     padding: 0;
     box-sizing: border-box;
     font-weight: bold;
+    transition: all 0.8s;
   }
   
   .close-modal:hover,
