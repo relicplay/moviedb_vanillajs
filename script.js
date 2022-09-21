@@ -5,6 +5,7 @@ const modal = document.querySelector('#myModal');
 const closeModalBtn = document.querySelector('.close-modal');
 
 let data = [];
+let modalData = [];
 
 closeModalBtn.addEventListener("click", () => {modal.style.display = "none";});
 window.addEventListener("click", (event) => {
@@ -29,8 +30,9 @@ const dataRequest = async (myRequest) => {
       console.log(element);
     });
     
+    const filteredData = filterData(data.results);
     clearContent("#movielist");
-    displayResult("#movielist", data.results);
+    displayResult("#movielist", filteredData);
   }
 
 
@@ -77,7 +79,8 @@ const dataRequest = async (myRequest) => {
             parentElement: `itemcard${index}`
           }
         );
-        document.querySelector(`#itemcard${index}`).addEventListener("click", () => {modal.style.display = "block";});
+        //() => {updateModalData();}
+        document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalData(element);});
 
     });
   }
@@ -91,6 +94,22 @@ const dataRequest = async (myRequest) => {
       const textnode = obj.elementContent ? obj.elementContent : '';
       e.appendChild(document.createTextNode(textnode));
       document.getElementById(obj.parentElement).appendChild(e);
+  }
+
+
+  const filterData = (objToFilter) => {
+    return objToFilter;
+  }
+
+  const updateModalData = (singleMovieData) => {
+    modalData = singleMovieData;
+    const header = document.querySelector('.modal-header');
+    header.style.backgroundImage = `url(${imgBaseUrl}${modalData.backdrop_path})`;
+    header.querySelector('h1').textContent = modalData.title;
+
+    //const e = document.querySelector('.modal-moviedetails');
+    //e.appendChild(document.createTextNode(JSON.stringify(modalData)));
+    modal.style.display = "block";
   }
 
   
