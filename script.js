@@ -1,9 +1,17 @@
 const baseUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 
-let modal = true;
+const modal = document.querySelector('#myModal');
+const closeModalBtn = document.querySelector('.close-modal');
 
 let data = [];
+
+closeModalBtn.addEventListener("click", () => {modal.style.display = "none";});
+window.addEventListener("click", (event) => {
+  if (event.target == modal) {
+    modal.style.display = "none";}
+  }
+);
 
 
 const dataRequest = async (myRequest) => {
@@ -69,7 +77,7 @@ const dataRequest = async (myRequest) => {
             parentElement: `itemcard${index}`
           }
         );
-        document.getElementById(`itemcard${index}`).addEventListener("click", () => {alert (modal);});
+        document.querySelector(`#itemcard${index}`).addEventListener("click", () => {modal.style.display = "block";});
 
     });
   }
@@ -87,6 +95,9 @@ const dataRequest = async (myRequest) => {
 
   
   dataRequest('&sort_by=popularity.desc');
+
+
+
 
   
 
