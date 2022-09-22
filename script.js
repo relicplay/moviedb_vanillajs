@@ -16,17 +16,37 @@ let modalData = [];
   }
   );
 
-  closeModalBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  }
-  );
-
   window.addEventListener("click", (event) => {
     if (event.target == modal) {
       modal.style.display = "none";
     }
     }
   );
+
+  closeModalBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  }
+  );
+
+  
+  document.querySelectorAll(".mainmenu button").forEach((element) => {
+    element.addEventListener('click', () => {
+      console.log(element.value);
+      dataRequest(element.value, getMovies);
+    })
+  });
+
+
+  /*
+  document.querySelectorAll('.mainmenu button').forEach((items) => {
+    items.addEventListener('click', (items) => {
+      console.log(items);
+      alert(typeof(items));
+    })
+  })
+  */
+
+
 
 
   const dataRequest = async (myRequest, callbackFunction) => {
@@ -60,6 +80,7 @@ let modalData = [];
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
     results.forEach(function(element, index) {
+      console.log(element.poster_path);
       addDomElement(
         {
           typeOfElement: "article", 
@@ -72,7 +93,7 @@ let modalData = [];
           {
             typeOfElement: "img", 
             elementClass: "thumbnail",
-            imgSrc: `${imgBaseUrl}${element.poster_path}`,
+            imgSrc: element.poster_path !== null ? `${imgBaseUrl}${element.poster_path}` : `images/noimg.png`,
             imgAlt: "Image",
             parentElement: `itemcard${index}`
           }
@@ -140,7 +161,7 @@ let modalData = [];
   }
 
   
-  dataRequest('&sort_by=popularity.desc', getMovies);
+  //dataRequest('&sort_by=popularity.desc', getMovies);
 
 
 

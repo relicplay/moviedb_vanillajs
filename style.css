@@ -58,8 +58,39 @@ header {
     border-bottom: var(--border);
 }
 
-nav {
 
+.mainmenu {
+  display: flex;
+  box-sizing: border-box;
+  background-color: blue;
+  width: 50%;
+}
+
+.mainmenu button {
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+.mainmenu ul {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: inline;
+  background-color: red;
+}
+
+.mainmenu ul li {
+  display: inline;
+  box-sizing: border-box;
+  padding: 0.5em;
+  background-color: green;
 }
 
 main {
