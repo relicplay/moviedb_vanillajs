@@ -7,11 +7,24 @@ const closeModalBtn = document.querySelector('.close-modal');
 let data = [];
 let modalData = [];
 
-closeModalBtn.addEventListener("click", () => {modal.style.display = "none";});
+
+  window.addEventListener("scroll", () => {
+    const targetElement = document.querySelector("#navlogo").classList;
+    document.documentElement.scrollTop > 25
+    ? targetElement.add("navlogo-small")
+    : targetElement.remove("navlogo-small");
+  }
+  );
+
+  closeModalBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  }
+  );
 
   window.addEventListener("click", (event) => {
     if (event.target == modal) {
-      modal.style.display = "none";}
+      modal.style.display = "none";
+    }
     }
   );
 
