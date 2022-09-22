@@ -8,43 +8,49 @@ let data = [];
 let modalData = [];
 
 closeModalBtn.addEventListener("click", () => {modal.style.display = "none";});
-window.addEventListener("click", (event) => {
-  if (event.target == modal) {
-    modal.style.display = "none";}
-  }
-);
 
-
-const dataRequest = async (myRequest) => {
-    async function fetchData(myRequest) {
-      const response = await fetch(`${baseUrl}${myRequest}`);
-      
-      const result = await response.json();
-  
-      return result;
+  window.addEventListener("click", (event) => {
+    if (event.target == modal) {
+      modal.style.display = "none";}
     }
-  
-    data = await fetchData(myRequest);
-    console.log(data);
+  );
+
+
+  const dataRequest = async (myRequest, callbackFunction) => {
+    try {
+      const res = await fetch(`${baseUrl}${myRequest}`);
+      const data = await res.json();
+      console.log(data);
+      if (res.ok && typeof(callbackFunction) != 'undefined') {
+        callbackFunction(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    
+  }
+
+
+  const getMovies = (data) => {
     data.results.forEach(function(element) {
       console.log(element);
     });
-    
     const filteredData = filterData(data.results);
     clearContent("#movielist");
     displayResult("#movielist", filteredData);
   }
 
+  const getActors = () => {
+    console.log('Get actors:');
+  }
 
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
     results.forEach(function(element, index) {
-      //date, rating
       addDomElement(
         {
           typeOfElement: "article", 
           elementClass: "card",
-          //elementContent: `ITEM ${index+1}`,
           elementId: `itemcard${index}`, 
           parentElement: "movielist"
         }
@@ -121,7 +127,7 @@ const dataRequest = async (myRequest) => {
   }
 
   
-  dataRequest('&sort_by=popularity.desc');
+  dataRequest('&sort_by=popularity.desc', getMovies);
 
 
 
@@ -166,3 +172,17 @@ const fetchData = async (myRequest) => {
 */
 
 
+/*
+    async function fetchData(myRequest) {
+      const response = await fetch(`${baseUrl}${myRequest}`);
+      
+      const result = await response.json();
+  
+      return result;
+    }
+    */
+  
+    //data = await fetchData(myRequest);
+    //console.log(data);
+
+    //getMovies(data);
