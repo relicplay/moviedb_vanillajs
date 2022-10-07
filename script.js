@@ -4,8 +4,12 @@ const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 const modal = document.querySelector('#myModal');
 const closeModalBtn = document.querySelector('.close-modal');
 
+const navBtnCollection = document.querySelectorAll(".mainmenu button");
+
+
 let data = [];
 let modalData = [];
+let lastDataRequest = navBtnCollection[0].value;
 
 
   window.addEventListener("scroll", () => {
@@ -29,22 +33,14 @@ let modalData = [];
   );
 
   
-  document.querySelectorAll(".mainmenu button").forEach((element) => {
+  navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
-      console.log(element.value);
+      removeStyleClasses(navBtnCollection, "button-highlight");
+      highlightNavOption(element);
       dataRequest(element.value, getMovies);
     })
   });
 
-
-  /*
-  document.querySelectorAll('.mainmenu button').forEach((items) => {
-    items.addEventListener('click', (items) => {
-      console.log(items);
-      alert(typeof(items));
-    })
-  })
-  */
 
 
 
@@ -151,72 +147,34 @@ let modalData = [];
     modal.style.display = "block";
   }
 
+  //Adds textcontent into any element of choice:
   const addTextContent = (parentElement, targetElement, txt) => {
     return parentElement.querySelector(targetElement).textContent = txt;
   }
 
+  //Clears all content inside any element of choice:
   const clearContent = (targetId) => {
-    const targetElement = document.querySelector(targetId);
-    targetElement.innerHTML='';
+    document.querySelector(targetId).innerHTML='';
+  }
+
+  //Highlists selected button & stores its value:
+  const highlightNavOption = (element) => {
+    element.classList.add("button-highlight");
+    if (lastDataRequest != element.value) {
+      lastDataRequest=element.value;
+    }
+  }
+
+  //Removes css-class of all elements:
+  const removeStyleClasses = (targetElements, styleToRemove) => {
+    targetElements.forEach(element => {
+      element.classList.remove(styleToRemove);
+    });
   }
 
   
-  //dataRequest('&sort_by=popularity.desc', getMovies);
+  //Init data request from 1st button in main menu & highlights it:
+  dataRequest(navBtnCollection[0].value, getMovies);
+  highlightNavOption(navBtnCollection[0]);
 
 
-
-
-  
-
-
-  /*
-
-  const displayMovies = (targetId, data) => {
-    clearContent(targetId);
-
-    const addItem = (item) => {
-      text += item;
-    }
-
-    let items = "";
-    data.forEach(addItem);
-
-    targetElement.innerHTML=items;
-
-  }
-  
-*/
-
-/*
-
-
-const fetchData = async (myRequest) => {
-
-    let myObject = await fetch(`${baseUrl}${myRequest}`);
-    let myText = await myObject.text();
-
-    //console.log(myText);
-
-    const res = JSON.parse(myText);
-    console.log(res.results[0]);
-    
-
-}
-
-*/
-
-
-/*
-    async function fetchData(myRequest) {
-      const response = await fetch(`${baseUrl}${myRequest}`);
-      
-      const result = await response.json();
-  
-      return result;
-    }
-    */
-  
-    //data = await fetchData(myRequest);
-    //console.log(data);
-
-    //getMovies(data);
