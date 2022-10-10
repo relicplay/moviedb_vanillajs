@@ -76,7 +76,7 @@ let lastDataRequest = navBtnCollection[0].value;
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
     results.forEach(function(element, index) {
-      console.log(element.poster_path);
+      //console.log(element.poster_path);
       addDomElement(
         {
           typeOfElement: "article", 
@@ -97,23 +97,32 @@ let lastDataRequest = navBtnCollection[0].value;
         addDomElement(
           {
             typeOfElement: "div", 
-            elementClass: "testclass", 
-            elementContent: element.title.replace(/^(.{11}[^\s]*).*/, "$1"),
+            elementClass: "textholder",
+            elementId: `textholder${index}`, 
             parentElement: `itemcard${index}`
+          }
+          );
+        addDomElement(
+          {
+            typeOfElement: "div", 
+            elementClass: "cardtext", 
+            elementContent: element.title.replace(/^(.{11}[^\s]*).*/, "$1"),
+            parentElement: `textholder${index}`
           }
         );
         addDomElement(
           {
             typeOfElement: "div", 
-            elementClass: "testclass", 
-            elementContent: element.release_date,
-            parentElement: `itemcard${index}`
+            elementClass: "cardtext", 
+            elementContent: checkStringLength(element.release_date, 'N/A'),
+            parentElement: `textholder${index}`
           }
         );
         document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalData(element);});
 
     });
   }
+
 
   const addDomElement = (obj) => {
       const e = document.createElement(obj.typeOfElement);
@@ -170,6 +179,11 @@ let lastDataRequest = navBtnCollection[0].value;
     targetElements.forEach(element => {
       element.classList.remove(styleToRemove);
     });
+  }
+
+  //Checks & returns element if length > 0, else returns string of choice:
+  const checkStringLength = (element, stringToReturn) => {
+    return element.length > 0 ? element : stringToReturn;
   }
 
   

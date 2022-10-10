@@ -56,35 +56,45 @@ header {
     box-sizing: border-box;
     background-color: var(--colorA);
     border-bottom: var(--border);
+    position: fixed;
+    top: 0;
 }
 
 
 .mainmenu {
   display: flex;
+  align-items: center;
   box-sizing: border-box;
   background-color: blue;
   width: 50%;
 }
 
-.mainmenu button {
+.category-button {
   text-decoration: none;
   cursor: pointer;
   border: 0;
+  font-size: var(--headerSmall);
+  opacity: 0.5;
+  transition: background-color 1s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.5s ease-in;
 }
 
 .button-highlight {
   background-color: yellow;
+  transform: translateY(-5px);
+  box-shadow: 4px 4px #000;
+  font-weight: 900;
+  opacity: 1;
 }
 
 .mainmenu ul {
+  list-style: none;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   box-sizing: border-box;
-  width: 100%;
   margin: 0;
   padding: 0;
-  list-style-type: none;
+  width: 100%;
   display: inline;
   background-color: red;
 }
@@ -92,8 +102,7 @@ header {
 .mainmenu ul li {
   display: inline;
   box-sizing: border-box;
-  padding: 0.5em;
-  background-color: green;
+  padding: 0;
 }
 
 main {
@@ -103,6 +112,8 @@ main {
     box-sizing: border-box;
     min-height: 70vh;
     padding-top: 2rem;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
 }
 
 footer {
@@ -139,11 +150,13 @@ footer {
 .card {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     width: 200px;
     height: 350px;
+    margin: 0;
+    padding: 1em 0 1.5em 0;
     background-color: var(--itembox-bgcolor);
     border: 2px solid black;
     border-radius: 10px;
@@ -161,10 +174,14 @@ footer {
     height: auto;
 }
 
-.testclass {
+.textholder {
+  width: 80%;
+}
+
+.cardtext {
     display:block;
     background-color:red;
-    width: 80%;
+    width: 100%;
 }
 
 
@@ -269,6 +286,7 @@ footer {
     font-weight: bold;
     transition: all 0.8s;
     box-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+    filter: invert(100%);
   }
   
   .close-modal:hover,
