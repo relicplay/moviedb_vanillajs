@@ -36,8 +36,10 @@ let lastDataRequest = navBtnCollection[0].value;
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
       removeStyleClasses(navBtnCollection, "button-highlight");
-      highlightNavOption(element);
-      dataRequest(element.value, getMovies);
+      //API only called if user picks different request than before:
+      if (highlightNavOption(element)) {
+        dataRequest(element.value, getMovies);
+      }
     })
   });
 
@@ -171,7 +173,9 @@ let lastDataRequest = navBtnCollection[0].value;
     element.classList.add("button-highlight");
     if (lastDataRequest != element.value) {
       lastDataRequest=element.value;
+      return true;
     }
+    return false;
   }
 
   //Removes css-class of all elements:

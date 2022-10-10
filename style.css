@@ -46,6 +46,19 @@ body {
     align-content: space-between;
 }
 
+.wrapper {
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 280px;
+  min-height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 header {
     display: flex;
     flex-flow: row wrap;
@@ -58,6 +71,7 @@ header {
     border-bottom: var(--border);
     position: fixed;
     top: 0;
+    left: 0;
 }
 
 
@@ -66,7 +80,7 @@ header {
   align-items: center;
   box-sizing: border-box;
   background-color: blue;
-  width: 50%;
+  width: fit-content;
 }
 
 .category-button {
@@ -96,7 +110,6 @@ header {
   padding: 0;
   width: 100%;
   display: inline;
-  background-color: red;
 }
 
 .mainmenu ul li {
@@ -299,3 +312,8 @@ footer {
   }
 
   
+
+  /* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  
+} 
