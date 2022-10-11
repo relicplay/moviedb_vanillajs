@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 :root {
 
     font-size: 100%;
@@ -145,6 +149,38 @@ footer {
 .navlogo-small {
   width: 300px;
 }
+
+.search-container {
+  background-color: orange;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-container button {
+  margin: 0;
+  padding: 6px 10px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #ccc;
+}
+
+.search-icon {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-image: url('images/searchicon.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 
 .filterlist {
     width: 20%;
