@@ -149,7 +149,7 @@ footer {
 .filterlist {
     width: 20%;
     height:200px;
-    background-color:green;
+    background-color:pink;
 }
 
 #movielist {
@@ -315,5 +315,17 @@ footer {
 
   /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
-  
+  main {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  #movielist {
+    width: 100%;
+    justify-items: center;
+  }
+  .filterlist {
+    width: 100%;
+    padding-top: 4vh;
+  }
 } 

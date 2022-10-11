@@ -36,14 +36,12 @@ let lastDataRequest = navBtnCollection[0].value;
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
       removeStyleClasses(navBtnCollection, "button-highlight");
-      //API only called if user picks different request than before:
+      //prevents request to the API identical to the prior one:
       if (highlightNavOption(element)) {
         dataRequest(element.value, getMovies);
       }
     })
   });
-
-
 
 
 
