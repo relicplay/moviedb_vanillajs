@@ -1,8 +1,17 @@
-const baseUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
+//const baseUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
+
+const baseUrl = 'https://api.themoviedb.org/3/';
+const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
+const url_discover = 'discover/movie';
+const url_search = 'search/movie';
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
+
+//const baseUrl = 'https://api.themoviedb.org/3/search/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
+
 
 const modal = document.querySelector('#myModal');
 const closeModalBtn = document.querySelector('.close-modal');
+const searchBtn = document.querySelector('.search-container button');
 
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
 
@@ -32,22 +41,27 @@ let lastDataRequest = navBtnCollection[0].value;
   }
   );
 
+  searchBtn.addEventListener("click", () => {
+    searchTitle(document.querySelector('#search').value);
+  }
+  );
+
   
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
       removeStyleClasses(navBtnCollection, "button-highlight");
       //prevents request to the API identical to the prior one:
       if (highlightNavOption(element)) {
-        dataRequest(element.value, getMovies);
+        dataRequest(element.value, url_discover, getMovies);
       }
     })
   });
 
 
 
-  const dataRequest = async (myRequest, callbackFunction) => {
+  const dataRequest = async (myRequest, endpoint, callbackFunction) => {
     try {
-      const res = await fetch(`${baseUrl}${myRequest}`);
+      const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
       const data = await res.json();
       console.log(data);
       if (res.ok && typeof(callbackFunction) != 'undefined') {
@@ -156,6 +170,14 @@ let lastDataRequest = navBtnCollection[0].value;
     modal.style.display = "block";
   }
 
+  const searchTitle = (inputValue) => {
+    if (inputValue.length > 0 && compareDataRequests(inputValue)) {
+      removeStyleClasses(navBtnCollection, "button-highlight");
+      dataRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, getMovies);
+      document.querySelector('#search').value = '';
+    }
+  }
+
   //Adds textcontent into any element of choice:
   const addTextContent = (parentElement, targetElement, txt) => {
     return parentElement.querySelector(targetElement).textContent = txt;
@@ -169,8 +191,13 @@ let lastDataRequest = navBtnCollection[0].value;
   //Highlists selected button & stores its value:
   const highlightNavOption = (element) => {
     element.classList.add("button-highlight");
-    if (lastDataRequest != element.value) {
-      lastDataRequest=element.value;
+    return compareDataRequests(element.value);
+  }
+
+  //compares lastDataRequest with current API-request:
+  const compareDataRequests = (element) => {
+    if (lastDataRequest != element) {
+      lastDataRequest=element;
       return true;
     }
     return false;
@@ -190,7 +217,7 @@ let lastDataRequest = navBtnCollection[0].value;
 
   
   //Init data request from 1st button in main menu & highlights it:
-  dataRequest(navBtnCollection[0].value, getMovies);
+  dataRequest(navBtnCollection[0].value, url_discover, getMovies);
   highlightNavOption(navBtnCollection[0]);
 
 
