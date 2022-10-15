@@ -1,12 +1,8 @@
-//const baseUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
-
 const baseUrl = 'https://api.themoviedb.org/3/';
 const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const url_discover = 'discover/movie';
 const url_search = 'search/movie';
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
-
-//const baseUrl = 'https://api.themoviedb.org/3/search/movie?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 
 
 const modal = document.querySelector('#myModal');
