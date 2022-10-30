@@ -1,3 +1,11 @@
+const checkHamburger = () => {
+  const hamburgerMenu = document.querySelector("#myLinks");
+  hamburgerMenu.style.display === "block"
+  ? hamburgerMenu.style.display = "none"
+  : hamburgerMenu.style.display = "block";
+}
+
+
 const baseUrl = 'https://api.themoviedb.org/3/';
 const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const url_discover = 'discover/movie';
@@ -8,12 +16,14 @@ const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 const modal = document.querySelector('#myModal');
 const closeModalBtn = document.querySelector('.close-modal');
 const searchBtn = document.querySelector('.search-container button');
+const filterBtn = document.querySelector('#filter-button');
 
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
 
 
 let data = [];
 let modalData = [];
+let unfilteredMovieData;
 let lastDataRequest = navBtnCollection[0].value;
 
 
@@ -39,6 +49,18 @@ let lastDataRequest = navBtnCollection[0].value;
 
   searchBtn.addEventListener("click", () => {
     searchTitle(document.querySelector('#search').value);
+  }
+  );
+
+  document.body.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        searchBtn.click();
+    }
+  });
+
+  filterBtn.addEventListener("click", () => {
+    filterData(unfilteredMovieData);
   }
   );
 
@@ -74,14 +96,12 @@ let lastDataRequest = navBtnCollection[0].value;
     data.results.forEach(function(element) {
       console.log(element);
     });
+    unfilteredMovieData = data;
     const filteredData = filterData(data.results);
     clearContent("#movielist");
     displayResult("#movielist", filteredData);
   }
 
-  const getActors = () => {
-    console.log('Get actors:');
-  }
 
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
@@ -147,6 +167,14 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   const filterData = (objToFilter) => {
+    //alert(JSON.stringify(objToFilter));
+    objToFilter = filterByVotes(objToFilter);
+    return objToFilter;
+  }
+
+  const filterByVotes = (objToFilter) => {
+    //alert(JSON.stringify(objToFilter[0]));
+    //console.log(document.querySelector("#voterange").value);
     return objToFilter;
   }
 
@@ -181,7 +209,9 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Clears all content inside any element of choice:
   const clearContent = (targetId) => {
-    document.querySelector(targetId).innerHTML='';
+    //document.querySelector(targetId).innerHTML='';
+    const element = document.querySelector(targetId);
+    while (element.firstChild) element.removeChild(element.firstChild);
   }
 
   //Highlists selected button & stores its value:

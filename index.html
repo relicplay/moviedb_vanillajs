@@ -25,6 +25,17 @@
                 <li><button value="&with_genres=878&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31&vote_count.gte=10" class="category-button">Best 80's Sci-fi</button></li>
                 <li><button value="&with_genres=27&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31&vote_count.gte=10" class="category-button">Best 80's Horror</button></li>
             </ul>
+
+            <div id="myLinks">
+                <a href="#news">News</a>
+                <a href="#contact">Contact</a>
+                <a href="#about">About</a>
+              </div>
+              <a href="javascript:void(0);" class="icon" onclick="checkHamburger()">
+                <i class="fa fa-bars"></i>
+              </a>
+            
+            
         </nav>
         <div class="search-container">
             <input type="text" placeholder="Search..." id="search" autocomplete="on" pattern="[^']+" maxlength="90">
@@ -38,13 +49,13 @@
             
                 Sortera: drop down<br/>
                 popularity<br/>
-                vote average 1 <input type="range" min="1" max="10" value="10" class="slider" id="voterange"> 10<br/>
+                vote average 1 <input type="range" min="1" max="10" value="10" class="slider" id="voterange" step="0.1"> 10<br/>
                 vote count<br/>
                 <input type="checkbox" id="adult" name="adult" value="Adult">
                 <label for="adult"> Adult</label><br/>
                 <input type="checkbox" id="video" name="video" value="Video">
                 <label for="video"> Video</label><br/>
-                <button>Apply</button>
+                <button id="filter-button">Apply</button>
               
         </section>
         <section id="movielist">

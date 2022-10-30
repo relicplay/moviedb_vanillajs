@@ -144,6 +144,7 @@ footer {
     width: 500px;
     height: auto;
     transition: all 0.8s ease-out;
+    margin-bottom: 1em;
 }
 
 .navlogo-small {
@@ -348,10 +349,77 @@ footer {
     background-color: hsl(200 50% 90%);
   }
 
+
+
+
+  /*alter these once done!*/
+
+  #myLinks {
+    display: none;
+    background-color: yellow;
+  }
+  
+  .mainmenu a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+  }
+  
+  .mainmenu a.icon {
+    background: black;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  .mainmenu a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  /*alter these once done!*/
+
   
 
   /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
+  header {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+  .navlogo {
+    width: 200px;
+    align-self: flex-start;
+  }
+  .navlogo-small {
+    width: 100px;
+  }
+  .search-container {
+    margin-top: 1em;
+  }
+  .mainmenu {
+    width: 100%;
+  }
+  .mainmenu a.icon {
+    display: block;
+  }
+  .mainmenu ul:nth-child(1) {
+    display: none;
+  }
   main {
     flex-flow: column nowrap;
     justify-content: center;
