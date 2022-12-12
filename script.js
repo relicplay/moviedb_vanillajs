@@ -9,14 +9,20 @@ const modal = document.querySelector('#myModal');
 const closeModalBtn = document.querySelector('.close-modal');
 const searchBtn = document.querySelector('.search-container button');
 const filterBtn = document.querySelector('#filter-button');
-
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
+const voteSlider = document.querySelector("#voterange");
+const voteDisplay = document.querySelector("#voterrange-display");
 
 
-let data = [];
+let data_stored = [];
 let modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
 
+
+  voteSlider.addEventListener("input", () => {
+    voteDisplay.textContent = voteSlider.value;
+    if (Object.keys(data_stored.results).length > 0) {getMovies(data_stored);}
+  });
 
   window.addEventListener("scroll", () => {
     const targetElement = document.querySelector("#navlogo").classList;
@@ -50,11 +56,6 @@ let lastDataRequest = navBtnCollection[0].value;
     }
   });
 
-  filterBtn.addEventListener("click", () => {
-    filterData(unfilteredMovieData);
-  }
-  );
-
   
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
@@ -74,6 +75,7 @@ let lastDataRequest = navBtnCollection[0].value;
       const data = await res.json();
       console.log(data);
       if (res.ok && typeof(callbackFunction) != 'undefined') {
+        data_stored = data;
         callbackFunction(data);
       }
     } catch (err) {
@@ -164,8 +166,13 @@ let lastDataRequest = navBtnCollection[0].value;
 
   const filterByVotes = (objToFilter) => {
     //alert(JSON.stringify(objToFilter[0]));
-    //console.log(document.querySelector("#voterange").value);
-    return objToFilter;
+    return objToFilter.filter(e => e.vote_average <= voteSlider.value);
+    
+    /*
+    objToFilter.filter((el, index) => {
+        console.log(`${el.title} has a value of: `, el.vote_average);
+    });
+    */
   }
 
   const updateModalData = (singleMovieData) => {
@@ -213,7 +220,7 @@ let lastDataRequest = navBtnCollection[0].value;
   //compares lastDataRequest with current API-request:
   const compareDataRequests = (element) => {
     if (lastDataRequest != element) {
-      lastDataRequest=element;
+      lastDataRequest = element;
       return true;
     }
     return false;
