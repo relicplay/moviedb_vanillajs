@@ -26,7 +26,7 @@ let lastDataRequest = navBtnCollection[0].value;
   }
   );
 
-  window.addEventListener("click", (event) => {
+  window.addEventListener("click", (event) => { 
     if (event.target == modal) {
       modal.style.display = "none";
     }
