@@ -1,9 +1,3 @@
-const checkHamburger = () => {
-  const hamburgerMenu = document.querySelector("#myLinks");
-  hamburgerMenu.style.display === "block"
-  ? hamburgerMenu.style.display = "none"
-  : hamburgerMenu.style.display = "block";
-}
 
 
 const baseUrl = 'https://api.themoviedb.org/3/';
