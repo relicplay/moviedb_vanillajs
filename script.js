@@ -1,5 +1,3 @@
-
-
 const baseUrl = 'https://api.themoviedb.org/3/';
 const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const url_discover = 'discover/movie';
@@ -17,7 +15,6 @@ const navBtnCollection = document.querySelectorAll(".mainmenu button");
 
 let data = [];
 let modalData = [];
-let unfilteredMovieData;
 let lastDataRequest = navBtnCollection[0].value;
 
 
@@ -90,7 +87,6 @@ let lastDataRequest = navBtnCollection[0].value;
     data.results.forEach(function(element) {
       console.log(element);
     });
-    unfilteredMovieData = data;
     const filteredData = filterData(data.results);
     clearContent("#movielist");
     displayResult("#movielist", filteredData);
