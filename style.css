@@ -68,6 +68,7 @@ header {
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
+    gap: 0 .5em;
     width: 100%;
     padding: 1rem;
     box-sizing: border-box;
@@ -106,9 +107,6 @@ header {
 
 .mainmenu ul {
   list-style: none;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -129,7 +127,7 @@ main {
     box-sizing: border-box;
     min-height: 70vh;
     padding-top: 2rem;
-    margin-top: 10vh;
+    margin-top: 20vh;
     margin-bottom: 5vh;
 }
 
@@ -154,7 +152,7 @@ footer {
 .search-container {
   background-color: orange;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -351,46 +349,6 @@ footer {
 
 
 
-
-  /*alter these once done!*/
-
-  #myLinks {
-    display: none;
-    background-color: yellow;
-  }
-  
-  .mainmenu a {
-    color: white;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    display: block;
-  }
-  
-  .mainmenu a.icon {
-    background: black;
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  
-  .mainmenu a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  .active {
-    background-color: #04AA6D;
-    color: white;
-  }
-
-  .hide {
-    display: none;
-  }
-
-  /*alter these once done!*/
-
   
 
   /* Medium devices (landscape tablets, 768px and up) */
@@ -410,15 +368,26 @@ footer {
   }
   .search-container {
     margin-top: 1em;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0 1em;
+  }
+  .search-container input[type='text'] {
+    width: 90%;
   }
   .mainmenu {
     width: 100%;
   }
-  .mainmenu a.icon {
-    display: block;
+  .mainmenu ul {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .5em 0;
   }
-  .mainmenu ul:nth-child(1) {
-    display: none;
+  .mainmenu button {
+    width: 100%;
+  }
+  .button-highlight {
+    box-shadow: 0 4px #000;
   }
   main {
     flex-flow: column nowrap;
