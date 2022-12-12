@@ -184,7 +184,28 @@ footer {
 .filterlist {
     width: 20%;
     height:200px;
+    padding: 1em;
     background-color:pink;
+}
+
+.filterlist p {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.filterlist label {
+  width: 100%;
+}
+
+.filterlist input[type='range'] {
+  width: 80%;
+}
+
+.filterlist span {
+  width: fit-content;
+  text-align: right;
 }
 
 #movielist {
