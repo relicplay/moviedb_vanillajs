@@ -15,6 +15,8 @@ const popularitySlider = document.querySelector("#popularityrange");
 const voteaverageSlider = document.querySelector("#voterange");
 const votecountSlider = document.querySelector("#votecountrange");
 
+//const statusMsg = document.querySelector(".statusmessage");
+
 
 let data_stored = [];
 let modalData = [];
@@ -67,19 +69,25 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
       removeStyleClasses(navBtnCollection, "button-highlight");
       //prevents request to the API identical to the prior one:
       if (highlightNavOption(element)) {
-        dataRequest(element.value, url_discover, getMovies);
+        dataRequest(element.value, url_discover);
       }
     })
   });
 
 
 
-  const dataRequest = async (myRequest, endpoint, callbackFunction) => {
+  const dataRequest = async (myRequest, endpoint, callbackFunction=getMovies) => {
     try {
       const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
       const data = await res.json();
       console.log(data);
-      if (res.ok && typeof(callbackFunction) != 'undefined') {
+      //&& typeof(callbackFunction) != 'undefined'
+      if (!res.ok) {
+        console.log(`status code: ${data.status_code} / ${data.status_message}`);
+        statusCodes(res.status);
+      }
+      else {
+        //statusMsg.style.display = "none";
         data_stored = data;
         callbackFunction(data);
       }
@@ -87,6 +95,25 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
       console.error(err);
     }
     
+  }
+
+  const statusCodes = (status) => {
+    let msg = '';
+    switch(status) {
+      case 401:
+        msg = '401 Unauthorized';
+        break;
+      case 404:
+        msg = 'HTTP 404 Not Found';
+        break;
+      case 500:
+        msg = '500 Internal Server Error';
+        break;
+      default:
+        msg = "unknown error";
+    }
+    console.log(msg);
+    //throw new Error(`An error has occured: ${status}`);
   }
 
 
@@ -237,7 +264,9 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
 
   
   //Init data request from 1st button in main menu & highlights it:
-  dataRequest(navBtnCollection[0].value, url_discover, getMovies);
+  /*
+  dataRequest(navBtnCollection[0].value, url_discover);
   highlightNavOption(navBtnCollection[0]);
+  */
 
 
