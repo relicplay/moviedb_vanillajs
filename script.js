@@ -10,8 +10,10 @@ const closeModalBtn = document.querySelector('.close-modal');
 const searchBtn = document.querySelector('.search-container button');
 const filterBtn = document.querySelector('#filter-button');
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
-const voteSlider = document.querySelector("#voterange");
-const voteDisplay = document.querySelector("#voterrange-display");
+
+const popularitySlider = document.querySelector("#popularityrange");
+const voteaverageSlider = document.querySelector("#voterange");
+const votecountSlider = document.querySelector("#votecountrange");
 
 
 let data_stored = [];
@@ -19,10 +21,13 @@ let modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
 
 
-  voteSlider.addEventListener("input", () => {
-    voteDisplay.textContent = voteSlider.value;
+document.querySelectorAll(".filterlist .slider").forEach((element) => {
+  element.nextElementSibling.textContent = element.value;
+  element.addEventListener('input', () => {
+    element.nextElementSibling.textContent = element.value;
     if (Object.keys(data_stored.results).length > 0) {getMovies(data_stored);}
-  });
+  })
+});
 
   window.addEventListener("scroll", () => {
     const targetElement = document.querySelector("#navlogo").classList;
@@ -160,19 +165,11 @@ let lastDataRequest = navBtnCollection[0].value;
 
   const filterData = (objToFilter) => {
     //alert(JSON.stringify(objToFilter));
-    objToFilter = filterByVotes(objToFilter);
-    return objToFilter;
-  }
-
-  const filterByVotes = (objToFilter) => {
-    //alert(JSON.stringify(objToFilter[0]));
-    return objToFilter.filter(e => e.vote_average <= voteSlider.value);
-    
-    /*
-    objToFilter.filter((el, index) => {
-        console.log(`${el.title} has a value of: `, el.vote_average);
+    return objToFilter.filter(e => {
+      return e.popularity >= popularitySlider.value
+      && e.vote_average <= voteaverageSlider.value
+      && e.vote_count >= votecountSlider.value;
     });
-    */
   }
 
   const updateModalData = (singleMovieData) => {
