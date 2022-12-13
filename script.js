@@ -23,6 +23,12 @@ let modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
 
 
+document.querySelector(".filterlist select").addEventListener("change", (el) => {
+  alert(document.querySelector(".filterlist select").value);
+}
+);
+
+
 document.querySelectorAll(".filterlist .slider").forEach((element) => {
   element.nextElementSibling.textContent = element.value;
   element.addEventListener('input', () => {
@@ -264,9 +270,9 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
 
   
   //Init data request from 1st button in main menu & highlights it:
-  /*
+  
   dataRequest(navBtnCollection[0].value, url_discover);
   highlightNavOption(navBtnCollection[0]);
-  */
+  
 
 

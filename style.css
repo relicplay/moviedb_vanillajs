@@ -183,7 +183,7 @@ footer {
 
 .filterlist {
     width: 20%;
-    height:200px;
+    height: fit-content;
     padding: 1em;
     background-color:pink;
 }
