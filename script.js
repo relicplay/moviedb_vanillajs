@@ -2,6 +2,7 @@ const baseUrl = 'https://api.themoviedb.org/3/';
 const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const url_discover = 'discover/movie';
 const url_search = 'search/movie';
+const url_genres = 'genre/movie/list'
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 
 
@@ -21,6 +22,7 @@ const votecountSlider = document.querySelector("#votecountrange");
 let data_stored = [];
 let modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
+let genres_list = [];
 
 
 document.querySelector(".filterlist select").addEventListener("change", (el) => {
@@ -94,7 +96,7 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
       }
       else {
         //statusMsg.style.display = "none";
-        data_stored = data;
+        myRequest === url_genres ? genres_list = data : data_stored = data;
         callbackFunction(data);
       }
     } catch (err) {
@@ -130,6 +132,11 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
     const filteredData = filterData(data.results);
     clearContent("#movielist");
     displayResult("#movielist", filteredData);
+  }
+
+  const getGenres = (data) => {
+    console.log('Genres stored: ', data.genres);
+    //Skapa checkboxes för varje gengre:
   }
 
 
@@ -273,6 +280,5 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
   
   dataRequest(navBtnCollection[0].value, url_discover);
   highlightNavOption(navBtnCollection[0]);
-  
-
+  dataRequest('', url_genres, getGenres);
 
