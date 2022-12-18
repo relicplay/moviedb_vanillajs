@@ -96,7 +96,7 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
       }
       else {
         //statusMsg.style.display = "none";
-        myRequest === url_genres ? genres_list = data : data_stored = data;
+        endpoint === url_genres ? genres_list = data : data_stored = data;
         callbackFunction(data);
       }
     } catch (err) {
@@ -212,20 +212,26 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
     });
   }
 
-  const updateModalData = (singleMovieData) => {
-    modalData = singleMovieData;
+  const updateModalData = (movieTitleData) => {
     const header = document.querySelector('.modal-header');
     const movieDetailsList = document.querySelector('.modal-moviedetails');
-    header.style.backgroundImage = `url(${imgBaseUrl}${modalData.backdrop_path})`;
-    addTextContent(header, 'h1', modalData.title);
+    header.style.backgroundImage = `url(${imgBaseUrl}${movieTitleData.backdrop_path})`;
+    addTextContent(header, 'h1', movieTitleData.title);
 
-    addTextContent(movieDetailsList, '#movieOgTitle', modalData.original_title);
-    addTextContent(movieDetailsList, '#movieDate', modalData.release_date);
-    addTextContent(movieDetailsList, '#movieOgLang', modalData.original_language);
-    addTextContent(movieDetailsList, '#movieAdult', modalData.adult ? 'Yes' : 'No');
-    addTextContent(movieDetailsList, '#movieOverview', modalData.overview);
+    addTextContent(movieDetailsList, '#movieOgTitle', movieTitleData.original_title);
+    addTextContent(movieDetailsList, '#movieDate', movieTitleData.release_date);
+    addTextContent(movieDetailsList, '#movieOgLang', movieTitleData.original_language);
+    addTextContent(movieDetailsList, '#movieAdult', movieTitleData.adult ? 'Yes' : 'No');
+    addTextContent(movieDetailsList, '#movieOverview', movieTitleData.overview);
+    addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => returnGenreName(g, genres_list.genres)).join(', '));
 
     modal.style.display = "block";
+  }
+
+  //Returns the name of genre id:
+  const returnGenreName = (id, obj) => {
+    const gname = obj.find(x => x.id === id).name;
+    return gname !== undefined ? gname : 'Unknown';
   }
 
   const searchTitle = (inputValue) => {
@@ -277,8 +283,10 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
 
   
   //Init data request from 1st button in main menu & highlights it:
-  
-  dataRequest(navBtnCollection[0].value, url_discover);
-  highlightNavOption(navBtnCollection[0]);
-  dataRequest('', url_genres, getGenres);
+  const init = () => {
+    dataRequest('', url_genres, getGenres);
+    dataRequest(navBtnCollection[0].value, url_discover);
+    highlightNavOption(navBtnCollection[0]);
+  }
 
+  init();
