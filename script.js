@@ -24,11 +24,12 @@ let modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
 let genres_list = [];
 
-
+/*
 document.querySelector(".filterlist select").addEventListener("change", (el) => {
   alert(document.querySelector(".filterlist select").value);
 }
 );
+*/
 
 
 document.querySelectorAll(".filterlist .slider").forEach((element) => {
@@ -89,7 +90,6 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
       const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
       const data = await res.json();
       console.log(data);
-      //&& typeof(callbackFunction) != 'undefined'
       if (!res.ok) {
         console.log(`status code: ${data.status_code} / ${data.status_message}`);
         statusCodes(res.status);
@@ -135,68 +135,128 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
   }
 
   const getGenres = (data) => {
-    console.log('Genres stored: ', data.genres);
+    //console.log('Genres stored: ', data.genres);
     //Skapa checkboxes för varje gengre:
+    data.genres.forEach((element, index) => {
+      console.log(element, index);
+        addDomElement(
+          {
+            typeOfElement: "input",
+            parentElement: "genreboxes",
+              props: {
+                type: {
+                  attributeValue: "checkbox"
+                },
+                id: {
+                  attributeValue: `genrebox${element.id}`
+                },
+                checked: {
+                  attributeValue: "checked"
+                }
+              }
+          }
+        );
+        addDomElement(
+          {
+            typeOfElement: "label", 
+            elementContent: element.name,
+            parentElement: "genreboxes",
+              props: {
+                class: {
+                  attributeValue: "checkbox-container"
+                },
+                for: {
+                  attributeValue: `genrebox${element.id}`
+                }
+              }
+          }
+        );
+    });
   }
 
 
   const displayResult = (targetId, results) => {
     const targetElement = document.querySelector(targetId);
-    results.forEach(function(element, index) {
-      //console.log(element.poster_path);
+    results.forEach((element, index) => {
       addDomElement(
         {
-          typeOfElement: "article", 
-          elementClass: "card",
-          elementId: `itemcard${index}`, 
-          parentElement: "movielist"
+          typeOfElement: "article",
+          parentElement: "movielist",
+            props: {
+              class: {
+                attributeValue: "card"
+              },
+              id: {
+                attributeValue: `itemcard${index}`
+              }
+            }
         }
-        );
-        addDomElement(
-          {
-            typeOfElement: "img", 
-            elementClass: "thumbnail",
-            imgSrc: element.poster_path !== null ? `${imgBaseUrl}${element.poster_path}` : `images/noimg.png`,
-            imgAlt: "Image",
-            parentElement: `itemcard${index}`
-          }
-        );
-        addDomElement(
-          {
-            typeOfElement: "div", 
-            elementClass: "textholder",
-            elementId: `textholder${index}`, 
-            parentElement: `itemcard${index}`
-          }
-          );
-        addDomElement(
-          {
-            typeOfElement: "div", 
-            elementClass: "cardtext", 
-            elementContent: element.title.replace(/^(.{11}[^\s]*).*/, "$1"),
-            parentElement: `textholder${index}`
-          }
-        );
-        addDomElement(
-          {
-            typeOfElement: "div", 
-            elementClass: "cardtext", 
-            elementContent: checkStringLength(element.release_date, 'N/A'),
-            parentElement: `textholder${index}`
-          }
-        );
-        document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalData(element);});
-
+      );
+      addDomElement(
+        {
+          typeOfElement: "img",
+          parentElement: `itemcard${index}`,
+            props: {
+              class: {
+                attributeValue: "thumbnail"
+              },
+              src: {
+                attributeValue: element.poster_path !== null ? `${imgBaseUrl}${element.poster_path}` : `images/noimg.png`
+              },
+              alt: {
+                attributeValue: "image"
+              }
+            }
+        }
+      );
+      addDomElement(
+        {
+          typeOfElement: "div",
+          parentElement: `itemcard${index}`,
+            props: {
+              class: {
+                attributeValue: "textholder"
+              },
+              id: {
+                attributeValue: `textholder${index}`
+              }
+            } 
+        }
+      );
+      addDomElement(
+        {
+          typeOfElement: "div",
+          parentElement: `textholder${index}`,
+          elementContent: element.title.replace(/^(.{11}[^\s]*).*/, "$1"),
+            props: {
+              class: {
+                attributeValue: "cardtext"
+              }
+            }
+        }
+      );
+      addDomElement(
+        {
+          typeOfElement: "div",
+          parentElement: `textholder${index}`,
+          elementContent: checkStringLength(element.release_date, 'N/A'),
+            props: {
+              class: {
+                attributeValue: "cardtext"
+              }
+            }
+        }
+      );
+      document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalData(element);});
     });
   }
 
 
   const addDomElement = (obj) => {
       const e = document.createElement(obj.typeOfElement);
-        if (obj.elementClass) {e.setAttribute("class", obj.elementClass);}
-        if (obj.elementId) {e.setAttribute("id", obj.elementId);}
-        if (obj.imgSrc) {e.setAttribute("src", obj.imgSrc);}
-        if (obj.imgAlt) {e.setAttribute("alt", obj.imgAlt);}
+      Object.keys(obj.props).forEach((element, index) => {
+        e.setAttribute(element, Object.values(obj.props)[index].attributeValue);
+      });
       const textnode = obj.elementContent ? obj.elementContent : '';
       e.appendChild(document.createTextNode(textnode));
       document.getElementById(obj.parentElement).appendChild(e);

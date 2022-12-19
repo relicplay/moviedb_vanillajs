@@ -21,6 +21,7 @@
     background-color: var(--colorC);
 
     --itembox-bgcolor: white;
+    --boxAngle: 4deg;
 
     --headerFont: 'Oswald', sans-serif;
     --regularFont: 'Roboto Slab', serif;
@@ -203,6 +204,10 @@ footer {
   width: 80%;
 }
 
+.filterlist select {
+  width: 80%;
+}
+
 .filterlist span {
   width: fit-content;
   text-align: right;
@@ -264,6 +269,28 @@ footer {
 }
 
 
+#genreboxes {
+  justify-content: flex-start;
+  gap: 1em;
+}
+#genreboxes label {
+  width: fit-content;
+}
+input[type='checkbox'] {
+  display: none;
+}
+.checkbox-container {
+  margin: 0;
+  padding: .3em;
+  background-color: green;
+  border: 2px solid #000;
+  opacity: .3;
+  border-radius: 5px;
+  transition: opacity 1s;
+}
+input[type='checkbox']:checked+label {
+  opacity: 1;
+}
 
 .modal {
     display: none;
