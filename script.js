@@ -95,7 +95,6 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
             genres_list = data;
             break;
           case url_languages:
-            languages_list = data;
             break;
           default:
             data_stored = data;
@@ -138,9 +137,11 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
 
   const getLanguages = (data) => {
     //removes first option (no language), then sorts alphabetically:
-    data.splice(0, 1).sort((a, b) =>
-    a.english_name.localeCompare(b.english_name));
-    data.forEach((element, index) => {
+    data.splice(0, 1);
+    data.sort((a, b) =>
+      a.english_name.localeCompare(b.english_name)
+    );
+    data.forEach((element) => {
       addDomElement(
         {
           typeOfElement: "option",
@@ -155,7 +156,6 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
       );
     }
     );
-    
   }
 
   const getGenres = (data) => {
