@@ -5,16 +5,16 @@ const url_search = 'search/movie';
 const url_genres = 'genre/movie/list'
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 
-
 const modal = document.querySelector('#myModal');
 const closeModalBtn = document.querySelector('.close-modal');
 const searchBtn = document.querySelector('.search-container button');
-const filterBtn = document.querySelector('#filter-button');
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
 
 const popularitySlider = document.querySelector("#popularityrange");
 const voteaverageSlider = document.querySelector("#voterange");
 const votecountSlider = document.querySelector("#votecountrange");
+
+let genreBtnCollection = document.querySelectorAll("#genreboxes input");
 
 //const statusMsg = document.querySelector(".statusmessage");
 
@@ -31,6 +31,11 @@ document.querySelector(".filterlist select").addEventListener("change", (el) => 
 );
 */
 
+genreBtnCollection.forEach((element) => {
+  element.addEventListener('click', () => {
+    console.log(element.id);
+  })
+});
 
 document.querySelectorAll(".filterlist .slider").forEach((element) => {
   element.nextElementSibling.textContent = element.value;
@@ -48,22 +53,17 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
   }
   );
 
-  window.addEventListener("click", (event) => { 
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-    }
-  );
-
-  closeModalBtn.addEventListener("click", () => {
-    modal.style.display = "none";
+  document.body.addEventListener("click", (event) => {
+    if (event.target == modal || event.target == closeModalBtn) {modal.style.display = "none";}
   }
   );
 
+  
   searchBtn.addEventListener("click", () => {
     searchTitle(document.querySelector('#search').value);
   }
   );
+
 
   document.body.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
@@ -135,8 +135,6 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
   }
 
   const getGenres = (data) => {
-    //console.log('Genres stored: ', data.genres);
-    //Skapa checkboxes för varje gengre:
     data.genres.forEach((element, index) => {
       console.log(element, index);
         addDomElement(
@@ -172,6 +170,7 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
           }
         );
     });
+    genreBtnCollection = document.querySelectorAll("#genreboxes input");
   }
 
 
