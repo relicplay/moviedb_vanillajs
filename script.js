@@ -2,7 +2,8 @@ const baseUrl = 'https://api.themoviedb.org/3/';
 const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const url_discover = 'discover/movie';
 const url_search = 'search/movie';
-const url_genres = 'genre/movie/list'
+const url_genres = 'genre/movie/list';
+const url_languages = 'configuration/languages';
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 
 const modal = document.querySelector('#myModal');
@@ -27,7 +28,7 @@ let languages_list = [];
 document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").forEach((element) => {
   if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
   element.addEventListener('input', () => {
-    displayElementValue(element, "slider");
+    if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
     if (Object.keys(data_stored.results).length > 0) {getMovies(data_stored);}
   })
 });
@@ -88,7 +89,17 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
       }
       else {
         //statusMsg.style.display = "none";
-        endpoint === url_genres ? genres_list = data : data_stored = data;
+        //bryt ut i egen funktion senare:
+        switch(endpoint) {
+          case url_genres:
+            genres_list = data;
+            break;
+          case url_languages:
+            languages_list = data;
+            break;
+          default:
+            data_stored = data;
+        }
         callbackFunction(data);
       }
     } catch (err) {
@@ -123,6 +134,28 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     });
     clearContent("#movielist");
     displayResult("#movielist", filterData(data.results));
+  }
+
+  const getLanguages = (data) => {
+    //removes first option (no language), then sorts alphabetically:
+    data.splice(0, 1).sort((a, b) =>
+    a.english_name.localeCompare(b.english_name));
+    data.forEach((element, index) => {
+      addDomElement(
+        {
+          typeOfElement: "option",
+          parentElement: "languageSelector",
+          elementContent: element.english_name,
+            props: {
+              value: {
+                attributeValue: element.iso_639_1
+              }
+            }
+        }
+      );
+    }
+    );
+    
   }
 
   const getGenres = (data) => {
@@ -348,14 +381,10 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     return element.length > 0 ? element : stringToReturn;
   }
 
-  //displays value of element of designated class:
-  const displayElementValue = (element, elementClass) => {
-    if (element.className === elementClass) {element.nextElementSibling.textContent = element.value;}
-  }
-
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
+    dataRequest('', url_languages, getLanguages);
     dataRequest('', url_genres, getGenres);
     dataRequest(navBtnCollection[0].value, url_discover);
     highlightNavOption(navBtnCollection[0]);
