@@ -14,8 +14,6 @@ const popularitySlider = document.querySelector("#popularityrange");
 const voteaverageSlider = document.querySelector("#voterange");
 const votecountSlider = document.querySelector("#votecountrange");
 
-let genreBtnCollection = document.querySelectorAll("#genreboxes input");
-
 //const statusMsg = document.querySelector(".statusmessage");
 
 
@@ -23,24 +21,13 @@ let data_stored = [];
 let modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
 let genres_list = [];
+let languages_list = [];
 
-/*
-document.querySelector(".filterlist select").addEventListener("change", (el) => {
-  alert(document.querySelector(".filterlist select").value);
-}
-);
-*/
 
-genreBtnCollection.forEach((element) => {
-  element.addEventListener('click', () => {
-    console.log(element.id);
-  })
-});
-
-document.querySelectorAll(".filterlist .slider").forEach((element) => {
-  element.nextElementSibling.textContent = element.value;
+document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").forEach((element) => {
+  if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
   element.addEventListener('input', () => {
-    element.nextElementSibling.textContent = element.value;
+    displayElementValue(element, "slider");
     if (Object.keys(data_stored.results).length > 0) {getMovies(data_stored);}
   })
 });
@@ -53,8 +40,13 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
   }
   );
 
+
   document.body.addEventListener("click", (event) => {
-    if (event.target == modal || event.target == closeModalBtn) {modal.style.display = "none";}
+    switch(event.target) {
+      case modal:
+      case closeModalBtn:
+        modal.style.display = "none";
+    }
   }
   );
 
@@ -129,9 +121,8 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
     data.results.forEach(function(element) {
       console.log(element);
     });
-    const filteredData = filterData(data.results);
     clearContent("#movielist");
-    displayResult("#movielist", filteredData);
+    displayResult("#movielist", filterData(data.results));
   }
 
   const getGenres = (data) => {
@@ -171,6 +162,12 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
         );
     });
     genreBtnCollection = document.querySelectorAll("#genreboxes input");
+    genreBtnCollection.forEach((element) => {
+      element.addEventListener('click', () => {
+        console.log(element.id);
+        //call filter function here!
+      })
+    });
   }
 
 
@@ -264,11 +261,22 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
 
   const filterData = (objToFilter) => {
     //alert(JSON.stringify(objToFilter));
-    return objToFilter.filter(e => {
-      return e.popularity >= popularitySlider.value
-      && e.vote_average <= voteaverageSlider.value
-      && e.vote_count >= votecountSlider.value;
+    return objToFilter.filter(title => {
+      return title.popularity >= popularitySlider.value
+      && title.vote_average <= voteaverageSlider.value
+      && title.vote_count >= votecountSlider.value
+      && checkTitleLanguage(title);
     });
+  }
+
+  //checks if title's language matches drop-down option:
+  const checkTitleLanguage = (title) => {
+    switch(document.querySelector(".filterlist #languageSelector").value) {
+      case "all":
+      case title.original_language:
+        return true;
+    }
+    return false;
   }
 
   const updateModalData = (movieTitleData) => {
@@ -338,6 +346,11 @@ document.querySelectorAll(".filterlist .slider").forEach((element) => {
   //Checks & returns element if length > 0, else returns string of choice:
   const checkStringLength = (element, stringToReturn) => {
     return element.length > 0 ? element : stringToReturn;
+  }
+
+  //displays value of element of designated class:
+  const displayElementValue = (element, elementClass) => {
+    if (element.className === elementClass) {element.nextElementSibling.textContent = element.value;}
   }
 
   
