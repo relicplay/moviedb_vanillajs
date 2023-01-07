@@ -19,11 +19,14 @@ const votecountSlider = document.querySelector("#votecountrange");
 
 let genreBtnCollection;
 
-let data_stored = [];
-let modalData = [];
+let data_stored,
+genres_list,
+languages_list,
+selectedGenres,
+modalData = [];
+
 let lastDataRequest = navBtnCollection[0].value;
-let genres_list = [];
-let languages_list = [];
+
 
 
 
@@ -212,21 +215,28 @@ let languages_list = [];
           }
         );
     });
-    //move into its own function:
+    clickGenreButtons();
+  }
+
+  //Checks if genre-button is clicked:
+  const clickGenreButtons = () => {
     genreBtnCollection = document.querySelectorAll("#genreboxes input");
+    countActiveButtons();
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
         console.log(element.value);
-        //includeMoviesByGenre(data_stored.results, element.value);
+        countActiveButtons();
+        //Goto filter function with elementcheck = button?
       })
     });
   }
 
-  //UNDER CONSTRUCTION:
+  /*UNDER CONSTRUCTION:
   const includeMoviesByGenre = (movies, genreId) => {
     console.log(movies.filter(movie => movie.genre_ids.includes(genreId)));
     //return movies.filter(movie => movie.genre_ids.includes(genreId));
   }
+  */
 
 
   //Creates & displays clickable cards for each individual title:
@@ -427,6 +437,17 @@ let languages_list = [];
   //Checks & returns element if length > 0, else returns string of choice:
   const getStringLength = (element, stringToReturn) => {
     return element.length > 0 ? element : stringToReturn;
+  }
+
+  //Refreshes the list of user-selected genres:
+  const countActiveButtons = () => {
+    selectedGenres = [];
+    genreBtnCollection.forEach((element) => {
+      if (element.checked) {
+        selectedGenres.push(element.value);
+      }
+    });
+    console.log(selectedGenres);
   }
 
   
