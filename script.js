@@ -82,9 +82,9 @@ let lastDataRequest = navBtnCollection[0].value;
         if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
       }
       displaySliderValue();
-      element.addEventListener('input', () => {
+      element.addEventListener('input', (event) => {
         displaySliderValue();
-        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
+        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored, event.target.type);}
       })
     });
   }
@@ -142,11 +142,13 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   //Replaces existing titleCards with updated ones:
-  const updateTitleCards = (data) => {
+  const updateTitleCards = (data, sourceElement) => {
     //Remove later:
     data.results.forEach(function(element) {
       console.log(element);
     });
+    console.log(sourceElement);
+    //Add check what element triggered this function?
     clearElementContent("#movielist");
     displayTitleCards(getFilteredObject(data.results));
   }
@@ -226,7 +228,7 @@ let lastDataRequest = navBtnCollection[0].value;
       element.addEventListener('click', () => {
         console.log(element.value);
         countActiveButtons();
-        //Goto filter function with elementcheck = button?
+        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored, element.type);}
       })
     });
   }
