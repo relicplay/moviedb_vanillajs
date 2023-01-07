@@ -173,6 +173,9 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
                 id: {
                   attributeValue: `genrebox${element.id}`
                 },
+                value: {
+                  attributeValue: element.id
+                },
                 checked: {
                   attributeValue: "checked"
                 }
@@ -199,7 +202,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     //Below code might not be needed:
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
-        console.log(element.id);
+        console.log(element.value);
         //call filter function here!
       })
     });
@@ -301,7 +304,8 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
       && title.vote_average <= voteaverageSlider.value
       && title.vote_count >= votecountSlider.value
       && checkTitleLanguage(title)
-      && matchGenres(title);
+      //&& matchGenres(title)
+      ;
     });
   }
 
