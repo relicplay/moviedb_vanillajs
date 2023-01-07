@@ -17,6 +17,7 @@ const votecountSlider = document.querySelector("#votecountrange");
 
 //const statusMsg = document.querySelector(".statusmessage");
 
+let genreBtnCollection;
 
 let data_stored = [];
 let modalData = [];
@@ -195,6 +196,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
         );
     });
     genreBtnCollection = document.querySelectorAll("#genreboxes input");
+    //Below code might not be needed:
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
         console.log(element.id);
@@ -298,7 +300,8 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
       return title.popularity >= popularitySlider.value
       && title.vote_average <= voteaverageSlider.value
       && title.vote_count >= votecountSlider.value
-      && checkTitleLanguage(title);
+      && checkTitleLanguage(title)
+      && matchGenres(title);
     });
   }
 
@@ -310,6 +313,23 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
         return true;
     }
     return false;
+  }
+
+  const matchGenres = (title) => {
+    console.clear();
+    console.log('Genre check was called!');
+    genreBtnCollection.forEach((element) => {
+        if (element.checked) {
+          console.log('Element is checked!');
+        }
+        //console.log(element.id);
+        //IF checkbox is checked:
+        //foreach for all genres in title.
+        //++ on each match, IF checkbox is checked
+        //return value
+        //or 0 if no match
+    });
+    return true;
   }
 
   const updateModalData = (movieTitleData) => {
