@@ -26,13 +26,7 @@ let genres_list = [];
 let languages_list = [];
 
 
-document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").forEach((element) => {
-  if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
-  element.addEventListener('input', () => {
-    if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
-    if (Object.keys(data_stored.results).length > 0) {getMovies(data_stored);}
-  })
-});
+
 
   window.addEventListener("scroll", () => {
     const targetElement = document.querySelector("#navlogo").classList;
@@ -54,7 +48,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
 
   
   searchBtn.addEventListener("click", () => {
-    searchTitle(document.querySelector('#search').value);
+    performAPISearch(document.querySelector('#search').value);
   }
   );
 
@@ -69,17 +63,31 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
   
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
-      removeStyleClasses(navBtnCollection, "button-highlight");
+      removeClassFromElements(navBtnCollection, "button-highlight");
       //prevents request to the API identical to the prior one:
-      if (highlightNavOption(element)) {
+      if (highlightSelectedButton(element)) {
         dataRequest(element.value, url_discover);
       }
     })
   });
 
 
+  
+  const initFilterControls = () => {
+    document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").forEach((element) => {
+      //find a better solution for this later:
+      if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
+      element.addEventListener('input', () => {
+        if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
+        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
+      })
+    });
+  }
+    
 
-  const dataRequest = async (myRequest, endpoint, callbackFunction=getMovies) => {
+
+  
+  const dataRequest = async (myRequest, endpoint, callbackFunction=updateTitleCards) => {
     try {
       const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
       const data = await res.json();
@@ -128,22 +136,25 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
   }
 
 
-  const getMovies = (data) => {
+  //Replaces existing titleCards with updated ones:
+  const updateTitleCards = (data) => {
+    //Remove later:
     data.results.forEach(function(element) {
       console.log(element);
     });
-    clearContent("#movielist");
-    displayResult("#movielist", filterData(data.results));
+    clearElementContent("#movielist");
+    displayTitleCards(getFilteredObject(data.results));
   }
 
-  const getLanguages = (data) => {
+  //Adds all available languages into the drop-down list:
+  const populateLanguageList = (languageList) => {
     //removes first option (no language), then sorts alphabetically:
-    data.splice(0, 1);
-    data.sort((a, b) =>
+    languageList.splice(0, 1);
+    languageList.sort((a, b) =>
       a.english_name.localeCompare(b.english_name)
     );
-    data.forEach((element) => {
-      addDomElement(
+    languageList.forEach((element) => {
+      createDomElement(
         {
           typeOfElement: "option",
           parentElement: "languageSelector",
@@ -159,10 +170,11 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     );
   }
 
-  const getGenres = (data) => {
-    data.genres.forEach((element, index) => {
+  //Creates & displays buttons for each individual genre:
+  const displayGenreButtons = (genreList) => {
+    genreList.genres.forEach((element, index) => {
       console.log(element, index);
-        addDomElement(
+        createDomElement(
           {
             typeOfElement: "input",
             parentElement: "genreboxes",
@@ -182,7 +194,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
               }
           }
         );
-        addDomElement(
+        createDomElement(
           {
             typeOfElement: "label", 
             elementContent: element.name,
@@ -199,25 +211,26 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
         );
     });
     genreBtnCollection = document.querySelectorAll("#genreboxes input");
-    //Below code might not be needed:
+    //Below code might not be needed, or should be moved in with the rest of the filter clicks:
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
         console.log(element.value);
-        includeMoviesByGenre(data_stored.results, element.value);
+        //includeMoviesByGenre(data_stored.results, element.value);
       })
     });
   }
 
+  //UNDER CONSTRUCTION:
   const includeMoviesByGenre = (movies, genreId) => {
     console.log(movies.filter(movie => movie.genre_ids.includes(genreId)));
     //return movies.filter(movie => movie.genre_ids.includes(genreId));
   }
 
 
-  const displayResult = (targetId, results) => {
-    const targetElement = document.querySelector(targetId);
-    results.forEach((element, index) => {
-      addDomElement(
+  //Creates & displays clickable cards for each individual title:
+  const displayTitleCards = (titles) => {
+    titles.forEach((element, index) => {
+      createDomElement(
         {
           typeOfElement: "article",
           parentElement: "movielist",
@@ -231,7 +244,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
             }
         }
       );
-      addDomElement(
+      createDomElement(
         {
           typeOfElement: "img",
           parentElement: `itemcard${index}`,
@@ -248,7 +261,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
             }
         }
       );
-      addDomElement(
+      createDomElement(
         {
           typeOfElement: "div",
           parentElement: `itemcard${index}`,
@@ -262,7 +275,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
             } 
         }
       );
-      addDomElement(
+      createDomElement(
         {
           typeOfElement: "div",
           parentElement: `textholder${index}`,
@@ -274,11 +287,11 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
             }
         }
       );
-      addDomElement(
+      createDomElement(
         {
           typeOfElement: "div",
           parentElement: `textholder${index}`,
-          elementContent: checkStringLength(element.release_date, 'N/A'),
+          elementContent: getStringLength(element.release_date, 'N/A'),
             props: {
               class: {
                 attributeValue: "cardtext"
@@ -286,36 +299,38 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
             }
         }
       );
-      document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalData(element);});
+      document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalContent(element);});
     });
   }
 
 
-  const addDomElement = (obj) => {
-      const e = document.createElement(obj.typeOfElement);
+  //Creates new DOM-element:
+  const createDomElement = (obj) => {
+      const newElement = document.createElement(obj.typeOfElement);
       Object.keys(obj.props).forEach((element, index) => {
-        e.setAttribute(element, Object.values(obj.props)[index].attributeValue);
+        newElement.setAttribute(element, Object.values(obj.props)[index].attributeValue);
       });
       const textnode = obj.elementContent ? obj.elementContent : '';
-      e.appendChild(document.createTextNode(textnode));
-      document.getElementById(obj.parentElement).appendChild(e);
+      newElement.appendChild(document.createTextNode(textnode));
+      document.getElementById(obj.parentElement).appendChild(newElement);
   }
 
 
-  const filterData = (objToFilter) => {
+  //Returns a filtered version of object based on the form parameters:
+  const getFilteredObject = (objToFilter) => {
     //alert(JSON.stringify(objToFilter));
     return objToFilter.filter(title => {
       return title.popularity >= popularitySlider.value
       && title.vote_average <= voteaverageSlider.value
       && title.vote_count >= votecountSlider.value
-      && checkTitleLanguage(title)
+      && checkTitleLanguageMatch(title)
       //&& matchGenres(title)
       ;
     });
   }
 
-  //checks if title's language matches drop-down option:
-  const checkTitleLanguage = (title) => {
+  //Checks if title's language matches drop-down option:
+  const checkTitleLanguageMatch = (title) => {
     switch(document.querySelector(".filterlist #languageSelector").value) {
       case "all":
       case title.original_language:
@@ -324,6 +339,7 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     return false;
   }
 
+  /* may not be used:
   const matchGenres = (title) => {
     console.clear();
     console.log('Genre check was called!');
@@ -340,33 +356,34 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     });
     return true;
   }
+  */
 
-  const updateModalData = (movieTitleData) => {
+  //Updates content of the modal:
+  const updateModalContent = (movieTitleData) => {
     const header = document.querySelector('.modal-header');
     const movieDetailsList = document.querySelector('.modal-moviedetails');
     header.style.backgroundImage = `url(${imgBaseUrl}${movieTitleData.backdrop_path})`;
     addTextContent(header, 'h1', movieTitleData.title);
-
     addTextContent(movieDetailsList, '#movieOgTitle', movieTitleData.original_title);
     addTextContent(movieDetailsList, '#movieDate', movieTitleData.release_date);
     addTextContent(movieDetailsList, '#movieOgLang', movieTitleData.original_language);
     addTextContent(movieDetailsList, '#movieAdult', movieTitleData.adult ? 'Yes' : 'No');
     addTextContent(movieDetailsList, '#movieOverview', movieTitleData.overview);
-    addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => returnGenreName(g, genres_list.genres)).join(', '));
-
+    addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => getGenreNameById(g, genres_list.genres)).join(', '));
     modal.style.display = "block";
   }
 
   //Returns the name of genre id:
-  const returnGenreName = (id, obj) => {
+  const getGenreNameById = (id, obj) => {
     const gname = obj.find(x => x.id === id).name;
     return gname !== undefined ? gname : 'Unknown';
   }
 
-  const searchTitle = (inputValue) => {
-    if (inputValue.length > 0 && compareDataRequests(inputValue)) {
-      removeStyleClasses(navBtnCollection, "button-highlight");
-      dataRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, getMovies);
+  //Searches for title based on user input:
+  const performAPISearch = (inputValue) => {
+    if (inputValue.length > 0 && compareDataWithApi(inputValue)) {
+      removeClassFromElements(navBtnCollection, "button-highlight");
+      dataRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, updateTitleCards);
       document.querySelector('#search').value = '';
     }
   }
@@ -377,20 +394,20 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
   }
 
   //Clears all content inside any element of choice:
-  const clearContent = (targetId) => {
+  const clearElementContent = (targetId) => {
     //document.querySelector(targetId).innerHTML='';
     const element = document.querySelector(targetId);
     while (element.firstChild) element.removeChild(element.firstChild);
   }
 
-  //Highlists selected button & stores its value:
-  const highlightNavOption = (element) => {
+  //Highlights selected button & stores its value:
+  const highlightSelectedButton = (element) => {
     element.classList.add("button-highlight");
-    return compareDataRequests(element.value);
+    return compareDataWithApi(element.value);
   }
 
-  //compares lastDataRequest with current API-request:
-  const compareDataRequests = (element) => {
+  //compares stored data with API-request:
+  const compareDataWithApi = (element) => {
     if (lastDataRequest != element) {
       lastDataRequest = element;
       return true;
@@ -399,24 +416,25 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
   }
 
   //Removes css-class of all elements:
-  const removeStyleClasses = (targetElements, styleToRemove) => {
+  const removeClassFromElements = (targetElements, styleToRemove) => {
     targetElements.forEach(element => {
       element.classList.remove(styleToRemove);
     });
   }
 
   //Checks & returns element if length > 0, else returns string of choice:
-  const checkStringLength = (element, stringToReturn) => {
+  const getStringLength = (element, stringToReturn) => {
     return element.length > 0 ? element : stringToReturn;
   }
 
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
-    dataRequest('', url_languages, getLanguages);
-    dataRequest('', url_genres, getGenres);
+    dataRequest('', url_languages, populateLanguageList);
+    dataRequest('', url_genres, displayGenreButtons);
     dataRequest(navBtnCollection[0].value, url_discover);
-    highlightNavOption(navBtnCollection[0]);
+    highlightSelectedButton(navBtnCollection[0]);
+    initFilterControls();
   }
 
   init();
