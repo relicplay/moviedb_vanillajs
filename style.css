@@ -34,6 +34,8 @@
 h1 {
     font-family: var(--headerFont);
     font-size: var(--headerLarge);
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -134,6 +136,9 @@ main {
 
 footer {
     display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+    padding: 0 1em;
     min-height: 100px;
     background-color:var(--colorA);
     border-top: var(--border);

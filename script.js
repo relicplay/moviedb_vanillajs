@@ -203,9 +203,14 @@ document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
         console.log(element.value);
-        //call filter function here!
+        includeMoviesByGenre(data_stored.results, element.value);
       })
     });
+  }
+
+  const includeMoviesByGenre = (movies, genreId) => {
+    console.log(movies.filter(movie => movie.genre_ids.includes(genreId)));
+    //return movies.filter(movie => movie.genre_ids.includes(genreId));
   }
 
 
