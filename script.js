@@ -75,10 +75,12 @@ let languages_list = [];
   
   const initFilterControls = () => {
     document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").forEach((element) => {
-      //find a better solution for this later:
-      if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
-      element.addEventListener('input', () => {
+      const displaySliderValue = () => {
         if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
+      }
+      displaySliderValue();
+      element.addEventListener('input', () => {
+        displaySliderValue();
         if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
       })
     });
@@ -210,8 +212,8 @@ let languages_list = [];
           }
         );
     });
+    //move into its own function:
     genreBtnCollection = document.querySelectorAll("#genreboxes input");
-    //Below code might not be needed, or should be moved in with the rest of the filter clicks:
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
         console.log(element.value);
