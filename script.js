@@ -142,15 +142,14 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   //Replaces existing titleCards with updated ones:
-  const updateTitleCards = (data, sourceElement) => {
+  const updateTitleCards = (data, clickedElement) => {
     //Remove later:
     data.results.forEach(function(element) {
       console.log(element);
     });
-    console.log(sourceElement);
     //Add check what element triggered this function?
     clearElementContent("#movielist");
-    displayTitleCards(getFilteredObject(data.results));
+    displayTitleCards(getFilteredObject(data.results, clickedElement));
   }
 
   //Adds all available languages into the drop-down list:
@@ -228,6 +227,7 @@ let lastDataRequest = navBtnCollection[0].value;
       element.addEventListener('click', () => {
         console.log(element.value);
         countActiveButtons();
+        //Line below (almost identical) is used on another place so might be good to make this own function:
         if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored, element.type);}
       })
     });
@@ -331,15 +331,19 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   //Returns a filtered version of object based on the form parameters:
-  const getFilteredObject = (objToFilter) => {
+  const getFilteredObject = (objToFilter, clickedElement) => {
     //alert(JSON.stringify(objToFilter));
     return objToFilter.filter(title => {
-      return title.popularity >= popularitySlider.value
-      && title.vote_average <= voteaverageSlider.value
-      && title.vote_count >= votecountSlider.value
-      && checkTitleLanguageMatch(title)
-      //&& matchGenres(title)
-      ;
+      if (clickedElement == "range") {
+        return title.popularity >= popularitySlider.value
+        && title.vote_average <= voteaverageSlider.value
+        && title.vote_count >= votecountSlider.value
+        && checkTitleLanguageMatch(title)
+        ;
+      }
+      else {
+        return matchGenres(title);
+      }
     });
   }
 
@@ -353,24 +357,18 @@ let lastDataRequest = navBtnCollection[0].value;
     return false;
   }
 
-  /* may not be used:
+  
   const matchGenres = (title) => {
-    console.clear();
-    console.log('Genre check was called!');
-    genreBtnCollection.forEach((element) => {
-        if (element.checked) {
-          console.log('Element is checked!');
+    let matchesFound = 0;
+    selectedGenres.forEach((element) => {
+        if (title.genre_ids.find(e => e == element)) {
+          matchesFound++;
         }
-        //console.log(element.id);
-        //IF checkbox is checked:
-        //foreach for all genres in title.
-        //++ on each match, IF checkbox is checked
-        //return value
-        //or 0 if no match
     });
-    return true;
+    if (matchesFound > 0) {return true;}
+    return false;
   }
-  */
+
 
   //Updates content of the modal:
   const updateModalContent = (movieTitleData) => {
