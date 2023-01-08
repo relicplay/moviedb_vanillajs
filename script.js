@@ -28,14 +28,18 @@ modalData = [];
 let lastDataRequest = navBtnCollection[0].value;
 
 
-
-
-
   window.addEventListener("scroll", () => {
     const targetElement = document.querySelector("#navlogo").classList;
     document.documentElement.scrollTop > 25
     ? targetElement.add("navlogo-small")
     : targetElement.remove("navlogo-small");
+    adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
+  }
+  );
+
+  
+  window.addEventListener("resize", () => {
+    adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
   }
   );
 
@@ -450,6 +454,11 @@ let lastDataRequest = navBtnCollection[0].value;
     console.log(selectedGenres);
   }
 
+  //Adjusts padding top of element y based on height of x:
+  const adjustPaddingTop = (x, y) => {
+    y.style.paddingTop = (x.offsetHeight * .5) + 'px';
+  }
+
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
@@ -458,6 +467,7 @@ let lastDataRequest = navBtnCollection[0].value;
     dataRequest(navBtnCollection[0].value, url_discover);
     highlightSelectedButton(navBtnCollection[0]);
     initFilterControls();
+    adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
   }
 
   init();
