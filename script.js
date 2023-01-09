@@ -237,13 +237,6 @@ let lastDataRequest = navBtnCollection[0].value;
     });
   }
 
-  /*UNDER CONSTRUCTION:
-  const includeMoviesByGenre = (movies, genreId) => {
-    console.log(movies.filter(movie => movie.genre_ids.includes(genreId)));
-    //return movies.filter(movie => movie.genre_ids.includes(genreId));
-  }
-  */
-
 
   //Creates & displays clickable cards for each individual title:
   const displayTitleCards = (titles) => {
@@ -336,7 +329,6 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Returns a filtered version of object based on the form parameters:
   const getFilteredObject = (objToFilter, clickedElement) => {
-    //alert(JSON.stringify(objToFilter));
     return objToFilter.filter(title => {
       if (clickedElement == "range" || clickedElement == "select-one") {
         return title.popularity >= popularitySlider.value
