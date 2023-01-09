@@ -29,6 +29,7 @@
     --headerLarge: 3em;
     --headerMedium: 2em;
     --headerSmall: 1em;
+
 }
 
 h1 {
@@ -95,6 +96,7 @@ header {
   text-decoration: none;
   cursor: pointer;
   border: 0;
+  font-family: var(--headerFont);
   font-size: var(--headerSmall);
   opacity: 0.5;
   transition: background-color 1s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.5s ease-in;
@@ -186,12 +188,19 @@ footer {
   background-repeat: no-repeat;
 }
 
+#search {
+  font-family: var(--headerFont);
+  font-size: var(--headerSmall);
+}
+
 
 .filterlist {
     width: 20%;
     height: fit-content;
     padding: 1em;
     background-color:pink;
+    font-family: var(--headerFont);
+    font-size: var(--headerSmall);
 }
 
 .filterlist p {
@@ -211,6 +220,8 @@ footer {
 
 .filterlist select {
   width: 80%;
+  font-family: var(--headerFont);
+  font-size: var(--headerSmall);
 }
 
 .filterlist span {
