@@ -338,7 +338,7 @@ let lastDataRequest = navBtnCollection[0].value;
   const getFilteredObject = (objToFilter, clickedElement) => {
     //alert(JSON.stringify(objToFilter));
     return objToFilter.filter(title => {
-      if (clickedElement == "range") {
+      if (clickedElement == "range" || clickedElement == "select-one") {
         return title.popularity >= popularitySlider.value
         && title.vote_average <= voteaverageSlider.value
         && title.vote_count >= votecountSlider.value
