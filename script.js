@@ -81,14 +81,14 @@ let lastDataRequest = navBtnCollection[0].value;
 
   
   const initFilterControls = () => {
-    document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector").forEach((element) => {
+    document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector, .filterlist #sortingSelector").forEach((element) => {
       const displaySliderValue = () => {
         if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
       }
       displaySliderValue();
       element.addEventListener('input', (event) => {
         displaySliderValue();
-        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored, event.target.type);}
+        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
       })
     });
   }
@@ -146,14 +146,45 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   //Replaces existing titleCards with updated ones:
-  const updateTitleCards = (data, clickedElement) => {
-    //Remove later:
-    data.results.forEach(function(element) {
+  const updateTitleCards = (obj) => {
+    /*
+    obj.results.forEach(function(element) {
       console.log(element);
     });
-    //Add check what element triggered this function?
+    */
     clearElementContent("#movielist");
-    displayTitleCards(getFilteredObject(data.results, clickedElement));
+    displayTitleCards(getFilteredObject(sortResult(obj)));
+  }
+
+  //Sorts result based on selected option in drop-down:
+  const sortResult = (obj) => {
+    let sortingType;
+    switch (document.querySelector("#sortingSelector").value) {
+      case "popAsc":
+        sortingType = (a, b) => a.popularity - b.popularity;
+        break;
+      case "titFall":
+        sortingType = (a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+        break;
+      case "titAsc":
+        sortingType = (a, b) => b.title.toLowerCase().localeCompare(a.title.toLowerCase());
+        break;
+      case "ratFall":
+        sortingType = (a, b) => b.vote_average - a.vote_average;
+        break;
+      case "ratAsc":
+        sortingType = (a, b) => a.vote_average - b.vote_average;
+        break;
+      case "relFall":
+        sortingType = (a, b) => new Date(b.release_date) - new Date(a.release_date);
+        break;
+      case "relAsc":
+        sortingType = (a, b) => new Date(a.release_date) - new Date(b.release_date);
+        break;
+      default:
+        sortingType = (a, b) => b.popularity - a.popularity;
+    }
+    return obj.results.sort(sortingType);
   }
 
   //Adds all available languages into the drop-down list:
@@ -232,7 +263,7 @@ let lastDataRequest = navBtnCollection[0].value;
         console.log(element.value);
         countActiveButtons();
         //Line below (almost identical) is used on another place so might be good to make this own function:
-        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored, element.type);}
+        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
       })
     });
   }
@@ -328,18 +359,14 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   //Returns a filtered version of object based on the form parameters:
-  const getFilteredObject = (objToFilter, clickedElement) => {
+  const getFilteredObject = (objToFilter) => {
     return objToFilter.filter(title => {
-      if (clickedElement == "range" || clickedElement == "select-one") {
         return title.popularity >= popularitySlider.value
         && title.vote_average <= voteaverageSlider.value
         && title.vote_count >= votecountSlider.value
         && checkTitleLanguageMatch(title)
+        && matchGenres(title)
         ;
-      }
-      else {
-        return matchGenres(title);
-      }
     });
   }
 
