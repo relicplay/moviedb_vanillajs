@@ -171,6 +171,7 @@ footer {
 
 footer h2 {
   font-size: var(--headerSmall);
+  padding-top: 1em;
 }
 
 footer p {
