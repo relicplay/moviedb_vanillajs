@@ -74,7 +74,7 @@ let lastDataRequest = navBtnCollection[0].value;
       removeClassFromElements(navBtnCollection, "button-highlight");
       //prevents request to the API identical to the prior one:
       if (highlightSelectedButton(element)) {
-        dataRequest(element.value, url_discover);
+        apiRequest(element.value, url_discover);
       }
     })
   });
@@ -95,27 +95,18 @@ let lastDataRequest = navBtnCollection[0].value;
   }
 
   
-  const dataRequest = async (myRequest, endpoint, callbackFunction=updateTitleCards) => {
+  //General function for API-requests:
+  const apiRequest = async (myRequest, endpoint, callbackFunction=updateTitleCards) => {
     try {
       const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
       const data = await res.json();
       console.log(data);
       if (!res.ok) {
         console.log(`status code: ${data.status_code} / ${data.status_message}`);
-        statusCodes(res.status);
+        statusCodes(res.status, data.status_message);
       }
       else {
-        //statusMsg.style.display = "none";
-        //bryt ut i egen funktion senare:
-        switch(endpoint) {
-          case url_genres:
-            genres_list = data;
-            break;
-          case url_languages:
-            break;
-          default:
-            data_stored = data;
-        }
+        determineDataDestination(endpoint, data);
         callbackFunction(data);
       }
     } catch (err) {
@@ -124,8 +115,22 @@ let lastDataRequest = navBtnCollection[0].value;
     
   }
 
-  const statusCodes = (status) => {
-    let msg = '';
+  //Decides which variable should store fetched API-data:
+  const determineDataDestination = (endpoint, data) => {
+    switch(endpoint) {
+      case url_genres:
+        genres_list = data;
+        break;
+      case url_languages:
+        break;
+      default:
+        data_stored = data;
+    }
+  }
+
+  //Displays error messages in DOM:
+  const statusCodes = (status, errDetails) => {
+    let msg;
     switch(status) {
       case 401:
         msg = '401 Unauthorized';
@@ -137,10 +142,10 @@ let lastDataRequest = navBtnCollection[0].value;
         msg = '500 Internal Server Error';
         break;
       default:
-        msg = "unknown error";
+        msg = "Unknown error";
     }
-    console.log(msg);
-    //throw new Error(`An error has occured: ${status}`);
+    addTextContent(statusMsg, 'h2', msg);
+    addTextContent(statusMsg, 'h3', errDetails);
   }
 
 
@@ -424,7 +429,7 @@ let lastDataRequest = navBtnCollection[0].value;
   const performAPISearch = (inputValue) => {
     if (inputValue.length > 0 && compareDataWithApi(inputValue)) {
       removeClassFromElements(navBtnCollection, "button-highlight");
-      dataRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, updateTitleCards);
+      apiRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, updateTitleCards);
       document.querySelector('#search').value = '';
     }
   }
@@ -486,15 +491,16 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Display the cards if there are any, otherwise error message:
   const displayCardsOrError = () => {
+    addTextContent(statusMsg, 'h2', 'No titles found');
     data_stored.results.length > 0 ? movieList.style.display = "grid" : movieList.style.display = "none";
     movieList.style.display == "none" ? statusMsg.style.display = "flex" : statusMsg.style.display = "none";
   }
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
-    dataRequest('', url_languages, populateLanguageList);
-    dataRequest('', url_genres, displayGenreButtons);
-    dataRequest(navBtnCollection[0].value, url_discover);
+    apiRequest('', url_languages, populateLanguageList);
+    apiRequest('', url_genres, displayGenreButtons);
+    apiRequest(navBtnCollection[0].value, url_discover);
     highlightSelectedButton(navBtnCollection[0]);
     initFilterControls();
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
