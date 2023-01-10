@@ -30,9 +30,13 @@
     --headerMedium: 2em;
     --headerSmall: 1em;
 
+    --regularLarge: 2em;
+    --regularMedium: 1em;
+    --regularSmall: .6em;
+
 }
 
-h1, h2 {
+h1, h2, h3 {
     font-family: var(--headerFont);
     font-size: var(--headerLarge);
     margin: 0;
@@ -41,6 +45,10 @@ h1, h2 {
 
 h2 {
   font-size: var(--headerMedium);
+}
+
+h3 {
+  font-size: var(--headerSmall);
 }
 
 
@@ -150,6 +158,15 @@ footer {
     border-top: var(--border);
 }
 
+footer h2 {
+  font-size: var(--headerSmall);
+}
+
+footer p {
+  font-family: var(--regularFont);
+  font-size: var(--regularMedium);
+}
+
 .navlogo {
     width: 500px;
     height: auto;
@@ -173,7 +190,6 @@ footer {
   margin: 0;
   padding: 6px 10px;
   background: #ddd;
-  font-size: 17px;
   border: none;
   cursor: pointer;
 }
@@ -393,6 +409,8 @@ input[type='checkbox']:checked+label {
   }
 
   .modal-moviedetails div:nth-last-child(1) {
+    font-family: var(--regularFont);
+    font-size: var(--regularMedium);
     font-style: italic;
   }
   

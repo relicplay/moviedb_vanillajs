@@ -78,8 +78,7 @@ let lastDataRequest = navBtnCollection[0].value;
       }
     })
   });
-
-
+  
   
   //Inits & checks interaction with filter-options:
   const initFilterControls = () => {
