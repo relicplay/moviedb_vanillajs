@@ -74,18 +74,18 @@
                     <input type="range" min="0" max="500" value="0" class="slider" id="votecountrange" step="1">
                     <span id="votecountrange-display"></span>
                 </p>
-                
-                
-                <!--
-                <input type="checkbox" id="adult" name="adult" value="Adult">
-                <label for="adult"> Adult</label><br/>
-                <input type="checkbox" id="video" name="video" value="Video">
-                <label for="video"> Video</label><br/>
-                -->
 
               
             </aside>
         <section id="movielist">
+            <!--
+                * Add new div layer for holding movie titles.
+                * make sure cards are created here instead.
+                * make sure this div is cleared, not the whole section
+                * Add function that displays statusmessage div if no result, and hides it if any
+                * In same function, display movielist div if success.
+                * Maybe something like: if movielist.style.display == "hidden" statusmessage.style.display = "flex" else statusmessage.style.display = "hidden"
+            -->
             <div class="statusmessage">
                 <h1>LIST OF ITEMS GOES HERE:</h1>
             </div>

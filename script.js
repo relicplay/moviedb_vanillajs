@@ -15,7 +15,7 @@ const popularitySlider = document.querySelector("#popularityrange");
 const voteaverageSlider = document.querySelector("#voterange");
 const votecountSlider = document.querySelector("#votecountrange");
 
-//const statusMsg = document.querySelector(".statusmessage");
+const statusMsg = document.querySelector(".statusmessage");
 
 let genreBtnCollection;
 
@@ -86,14 +86,12 @@ let lastDataRequest = navBtnCollection[0].value;
         if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
       }
       displaySliderValue();
-      element.addEventListener('input', (event) => {
+      element.addEventListener('input', () => {
         displaySliderValue();
-        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
+        checkIfTitlesExist();
       })
     });
   }
-    
-
 
   
   const dataRequest = async (myRequest, endpoint, callbackFunction=updateTitleCards) => {
@@ -144,6 +142,13 @@ let lastDataRequest = navBtnCollection[0].value;
     //throw new Error(`An error has occured: ${status}`);
   }
 
+
+  //checks if titles exist, then updates title cards:
+  const checkIfTitlesExist = (obj = data_stored) => {
+    if (obj) {
+      if (Object.keys(obj.results).length > 0) {updateTitleCards(obj);}
+    }
+  }
 
   //Replaces existing titleCards with updated ones:
   const updateTitleCards = (obj) => {
@@ -262,8 +267,7 @@ let lastDataRequest = navBtnCollection[0].value;
       element.addEventListener('click', () => {
         console.log(element.value);
         countActiveButtons();
-        //Line below (almost identical) is used on another place so might be good to make this own function:
-        if (Object.keys(data_stored.results).length > 0) {updateTitleCards(data_stored);}
+        checkIfTitlesExist();
       })
     });
   }
