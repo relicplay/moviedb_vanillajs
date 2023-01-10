@@ -348,7 +348,7 @@ let lastDataRequest = navBtnCollection[0].value;
       );
       document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalContent(element);});
     });
-    hideShowCards();
+    displayCardsOrError();
   }
 
 
@@ -485,8 +485,7 @@ let lastDataRequest = navBtnCollection[0].value;
   }
 
   //Display the cards if there are any, otherwise error message:
-  const hideShowCards = () => {
-    console.log('Detta status: ', data_stored.results);
+  const displayCardsOrError = () => {
     data_stored.results.length > 0 ? movieList.style.display = "grid" : movieList.style.display = "none";
     movieList.style.display == "none" ? statusMsg.style.display = "flex" : statusMsg.style.display = "none";
   }

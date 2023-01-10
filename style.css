@@ -32,11 +32,15 @@
 
 }
 
-h1 {
+h1, h2 {
     font-family: var(--headerFont);
     font-size: var(--headerLarge);
     margin: 0;
     padding: 0;
+}
+
+h2 {
+  font-size: var(--headerMedium);
 }
 
 
