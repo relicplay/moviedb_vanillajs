@@ -23,6 +23,7 @@ let genreBtnCollection;
 let data_stored,
 genres_list,
 languages_list,
+cast_list,
 selectedGenres,
 modalData = [];
 
@@ -115,9 +116,13 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Decides which variable should store fetched API-data:
   const determineDataDestination = (endpoint, data) => {
+    if (endpoint.includes('/credits')) {endpoint = "cast";}
     switch(endpoint) {
       case url_genres:
         genres_list = data;
+        break;
+      case "cast":
+        cast_list = data;
         break;
       case url_languages:
         break;
@@ -406,6 +411,7 @@ let lastDataRequest = navBtnCollection[0].value;
     addTextContent(movieDetailsList, '#movieOgLang', movieTitleData.original_language);
     addTextContent(movieDetailsList, '#movieAdult', movieTitleData.adult ? 'Yes' : 'No');
     addTextContent(movieDetailsList, '#movieOverview', movieTitleData.overview);
+    addTextContent(movieDetailsList, '#movieCast', cast_list.cast.slice(0, 5).map(g => g.name).join(', '));
     addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => getGenreNameById(g, genres_list.genres)).join(', '));
     modal.style.display = "block";
   }
@@ -485,6 +491,10 @@ let lastDataRequest = navBtnCollection[0].value;
     data_stored.results.length > 0 ? movieList.style.display = "grid" : movieList.style.display = "none";
     movieList.style.display == "none" ? statusMsg.style.display = "flex" : statusMsg.style.display = "none";
   }
+
+  const setCast = (data) => {
+    console.log('Display cast here:', data.cast);
+  }
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
@@ -494,6 +504,8 @@ let lastDataRequest = navBtnCollection[0].value;
     highlightSelectedButton(navBtnCollection[0]);
     initFilterControls();
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
+
+    apiRequest('', `movie/76600/credits`, setCast); //avatar, make check for active id or something
   }
 
   init();
