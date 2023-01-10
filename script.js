@@ -81,10 +81,11 @@ let lastDataRequest = navBtnCollection[0].value;
 
 
   
+  //Inits & checks interaction with filter-options:
   const initFilterControls = () => {
     document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector, .filterlist #sortingSelector").forEach((element) => {
       const displaySliderValue = () => {
-        if (element.className === "slider") {element.nextElementSibling.textContent = element.value;}
+        if (element.className == "slider") {element.nextElementSibling.textContent = element.value;}
       }
       displaySliderValue();
       element.addEventListener('input', () => {
@@ -110,9 +111,8 @@ let lastDataRequest = navBtnCollection[0].value;
         callbackFunction(data);
       }
     } catch (err) {
-      console.error(err);
+      addTextContent(statusMsg, 'h2', err);
     }
-    
   }
 
   //Decides which variable should store fetched API-data:
