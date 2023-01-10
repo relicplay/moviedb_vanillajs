@@ -240,11 +240,15 @@ footer {
 }
 
 #movielist {
-    background-color:green;
-    width: 60%;
+    width: 100%;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.cardwrapper {
+  background-color:green;
+  width: 60%;
 }
 
 .card {
@@ -468,8 +472,10 @@ input[type='checkbox']:checked+label {
     justify-content: center;
     align-items: center;
   }
-  #movielist {
+  .cardwrapper {
     width: 100%;
+  }
+  #movielist {
     justify-items: center;
   }
   .filterlist {
