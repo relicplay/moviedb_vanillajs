@@ -102,7 +102,6 @@ let lastDataRequest = navBtnCollection[0].value;
       const data = await res.json();
       console.log(data);
       if (!res.ok) {
-        console.log(`status code: ${data.status_code} / ${data.status_message}`);
         statusCodes(res.status, data.status_message);
       }
       else {
@@ -157,11 +156,6 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Replaces existing titleCards with updated ones:
   const updateTitleCards = (obj) => {
-    /*
-    obj.results.forEach(function(element) {
-      console.log(element);
-    });
-    */
     clearElementContent("#movielist");
     displayTitleCards(getFilteredObject(sortResult(obj)));
   }
@@ -223,8 +217,7 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Creates & displays buttons for each individual genre:
   const displayGenreButtons = (genreList) => {
-    genreList.genres.forEach((element, index) => {
-      console.log(element, index);
+    genreList.genres.forEach((element) => {
         createDomElement(
           {
             typeOfElement: "input",
@@ -270,7 +263,6 @@ let lastDataRequest = navBtnCollection[0].value;
     countActiveButtons();
     genreBtnCollection.forEach((element) => {
       element.addEventListener('click', () => {
-        console.log(element.value);
         countActiveButtons();
         checkIfTitlesExist();
       })
@@ -480,7 +472,6 @@ let lastDataRequest = navBtnCollection[0].value;
         selectedGenres.push(element.value);
       }
     });
-    console.log(selectedGenres);
   }
 
   //Adjusts padding top of element y based on height of x:
