@@ -20,8 +20,10 @@
     color: rgba(0,0,0,0.9);
     background-color: var(--colorC);
 
+    --linkCol: #000;
+    --hoverCol: blue;
+
     --itembox-bgcolor: white;
-    --boxAngle: 4deg;
 
     --headerFont: 'Oswald', sans-serif;
     --regularFont: 'Roboto Slab', serif;
@@ -49,6 +51,15 @@ h2 {
 
 h3 {
   font-size: var(--headerSmall);
+}
+
+a {
+  color: var(--linkCol);
+  font-weight: 700;
+  transition: all .5s ease-out;
+}
+a:hover {
+  color: var(--hoverCol);
 }
 
 
