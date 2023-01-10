@@ -347,7 +347,10 @@ let lastDataRequest = navBtnCollection[0].value;
             }
         }
       );
-      document.querySelector(`#itemcard${index}`).addEventListener("click", () => {updateModalContent(element);});
+      document.querySelector(`#itemcard${index}`).addEventListener("click", () => {
+        //Add if else checking if movie ID has already been used (that way no reason to do new API-request)
+        apiRequest('', `movie/${element.id}/credits`, () => {updateModalContent(element);});
+      });
     });
     displayCardsOrError();
   }
@@ -411,7 +414,7 @@ let lastDataRequest = navBtnCollection[0].value;
     addTextContent(movieDetailsList, '#movieOgLang', movieTitleData.original_language);
     addTextContent(movieDetailsList, '#movieAdult', movieTitleData.adult ? 'Yes' : 'No');
     addTextContent(movieDetailsList, '#movieOverview', movieTitleData.overview);
-    addTextContent(movieDetailsList, '#movieCast', cast_list.cast.slice(0, 5).map(g => g.name).join(', '));
+    addTextContent(movieDetailsList, '#movieCast', cast_list ? cast_list.cast.slice(0, 5).map(g => g.name).join(', ') : 'N/A');
     addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => getGenreNameById(g, genres_list.genres)).join(', '));
     modal.style.display = "block";
   }
@@ -505,7 +508,7 @@ let lastDataRequest = navBtnCollection[0].value;
     initFilterControls();
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
 
-    apiRequest('', `movie/76600/credits`, setCast); //avatar, make check for active id or something
+    //apiRequest('', `movie/76600/credits`, setCast); //avatar, make check for active id or something
   }
 
   init();
