@@ -289,6 +289,7 @@ footer p {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-items: center;
 }
 
 .cardwrapper {
@@ -338,12 +339,13 @@ footer p {
 }
 
 #movieCast {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  gap: .5em;
+  display: grid;
+  gap: .5rem;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   width: 100%;
   background-color: rgba(0,0,0,.2);
+  padding: 1em 0 2em 0;
+  justify-items: center;
 }
 
 .actorCard {
@@ -422,7 +424,7 @@ input[type='checkbox']:checked+label {
     display: block;
     box-sizing: border-box;
     width: 100%;
-    min-height: 300px;
+    min-height: 250px;
     padding: 0.3em 0 0 2em;
     background-color: #000;
     background-size: cover;
@@ -561,6 +563,12 @@ input[type='checkbox']:checked+label {
   }
   #movielist {
     justify-items: center;
+  }
+  .modal-moviedetails div {
+    width: 100%;
+  }
+  .modal-moviedetails div:nth-child(even) {
+    text-align: left;
   }
   .filterlist {
     width: 100%;
