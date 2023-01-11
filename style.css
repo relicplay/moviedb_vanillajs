@@ -17,6 +17,7 @@
     --colorE: #A9DECB;
 
     --cardHoverCol: red;
+    --genreButtonCol: green;
 
     --border: 2px solid black;
     color: rgba(0,0,0,0.9);
@@ -281,7 +282,6 @@ footer p {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: red;
 }
 
 #movielist {
@@ -356,6 +356,12 @@ footer p {
   gap: .3em;
   width: 70px;
   padding-top: .3em;
+  transition: all 0.8s;
+}
+
+.actorCard:hover {
+  cursor: pointer;
+  transform: scale(1.5);
 }
 
 .actorCard img {
@@ -386,11 +392,15 @@ input[type='checkbox'] {
 .checkbox-container {
   margin: 0;
   padding: .3em;
-  background-color: green;
+  background-color: var(--genreButtonCol);
   border: 2px solid #000;
   opacity: .3;
   border-radius: 5px;
-  transition: opacity 1s;
+  transition: opacity 1s, transform .8s, color .8s;
+}
+.checkbox-container:hover {
+  color: #fff;
+  transform: scale(1.1);
 }
 input[type='checkbox']:checked+label {
   opacity: 1;

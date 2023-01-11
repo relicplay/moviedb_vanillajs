@@ -251,7 +251,7 @@ let lastDataRequest = navBtnCollection[0].value;
             parentElement: "genreboxes",
               props: {
                 class: {
-                  attributeValue: "checkbox-container"
+                  attributeValue: "checkbox-container insetBorder"
                 },
                 for: {
                   attributeValue: `genrebox${element.id}`
