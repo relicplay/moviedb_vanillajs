@@ -320,6 +320,39 @@ footer p {
     width: 100%;
 }
 
+#movieCast {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  gap: .5em;
+  width: 100%;
+  background-color: rgba(0,0,0,.2);
+}
+
+.actorCard {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: .3em;
+  width: 70px;
+  padding-top: .3em;
+}
+
+.actorCard img {
+  width: 60px;
+  height: 70px;
+  object-fit: cover;
+  border: 2px solid #000;
+}
+
+.actorName {
+  font-family: var(--regularFont);
+  font-size: var(--regularSmall);
+  width: 100%;
+  text-align: center;
+}
+
 
 #genreboxes {
   justify-content: flex-start;

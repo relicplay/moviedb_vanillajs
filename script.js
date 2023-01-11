@@ -111,6 +111,7 @@ let lastDataRequest = navBtnCollection[0].value;
       callbackFunction(data);
     } catch (err) {
       addTextContent(statusMsg, 'h2', err);
+      console.log(err);
     }
   }
 
@@ -301,7 +302,7 @@ let lastDataRequest = navBtnCollection[0].value;
                 attributeValue: "thumbnail"
               },
               src: {
-                attributeValue: element.poster_path !== null ? `${imgBaseUrl}${element.poster_path}` : `images/noimg.png`
+                attributeValue: imageExists(element.poster_path)
               },
               alt: {
                 attributeValue: "image"
@@ -422,9 +423,50 @@ let lastDataRequest = navBtnCollection[0].value;
     addTextContent(movieDetailsList, '#movieOgLang', movieTitleData.original_language);
     addTextContent(movieDetailsList, '#movieAdult', movieTitleData.adult ? 'Yes' : 'No');
     addTextContent(movieDetailsList, '#movieOverview', movieTitleData.overview);
-    addTextContent(movieDetailsList, '#movieCast', cast_list ? cast_list.cast.slice(0, 5).map(g => g.name).join(', ') : 'N/A');
+    clearElementContent('#movieCast');
+    cast_list.cast.slice(0, 8).map((key) => {createActorCard(key.id, key.name, key.profile_path);});
     addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => getGenreNameById(g, genres_list.genres)).join(', '));
     modal.style.display = "block";
+  }
+
+  const createActorCard = (actorId, actorName, actorImg) => {
+    createDomElement(
+      {
+        typeOfElement: "article",
+        parentElement: "movieCast",
+          props: {
+            class: {
+              attributeValue: "actorCard"
+            },
+            id: {
+              attributeValue: `actorcard${actorId}`
+            }
+          }
+      }
+    );
+    createDomElement(
+      {
+        typeOfElement: "img",
+        parentElement: `actorcard${actorId}`,
+          props: {
+            src: {
+              attributeValue: imageExists(actorImg)
+            }
+          }
+      }
+    );
+    createDomElement(
+      {
+        typeOfElement: "h3",
+        parentElement: `actorcard${actorId}`,
+        elementContent: actorName,
+          props: {
+            class: {
+              attributeValue: "actorName"
+            }
+          }
+      }
+    );
   }
 
   //Returns the name of genre id:
@@ -449,7 +491,6 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Clears all content inside any element of choice:
   const clearElementContent = (targetId) => {
-    //document.querySelector(targetId).innerHTML='';
     const element = document.querySelector(targetId);
     while (element.firstChild) element.removeChild(element.firstChild);
   }
@@ -478,6 +519,7 @@ let lastDataRequest = navBtnCollection[0].value;
 
   //Checks & returns element if length > 0, else returns string of choice:
   const getStringLength = (element, stringToReturn) => {
+    if (!element) {return stringToReturn;}
     return element.length > 0 ? element : stringToReturn;
   }
 
@@ -506,6 +548,11 @@ let lastDataRequest = navBtnCollection[0].value;
   const setCast = (data) => {
     console.log('Display cast here:', data.cast);
   }
+
+  //If image path exists, returns image, else returns noimg:
+  const imageExists = (imgPath) => {
+    return imgPath !== null ? `${imgBaseUrl + imgPath}` : `images/noimg.png`
+  }
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
@@ -515,8 +562,6 @@ let lastDataRequest = navBtnCollection[0].value;
     highlightSelectedButton(navBtnCollection[0]);
     initFilterControls();
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
-
-    //apiRequest('', `movie/76600/credits`, setCast); //avatar, make check for active id or something
   }
 
   init();
