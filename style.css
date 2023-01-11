@@ -519,6 +519,7 @@ input[type='checkbox']:checked+label {
     text-decoration: none;
     cursor: pointer;
     background-color: hsl(200 50% 90%);
+    transform: scale(1.5);
   }
 
 
