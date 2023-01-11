@@ -18,13 +18,14 @@ const votecountSlider = document.querySelector("#votecountrange");
 const statusMsg = document.querySelector(".statusmessage");
 const movieList = document.querySelector("#movielist");
 
-let genreBtnCollection;
 
-let data_stored,
+let genreBtnCollection,
+data_stored,
 genres_list,
 languages_list,
 cast_list,
-selectedGenres,
+activeMovieId = -1,
+selectedGenres = [],
 modalData = [];
 
 let lastDataRequest = navBtnCollection[0].value;
@@ -104,11 +105,10 @@ let lastDataRequest = navBtnCollection[0].value;
       console.log(data);
       if (!res.ok) {
         statusCodes(res.status, data.status_message);
+        return;
       }
-      else {
-        determineDataDestination(endpoint, data);
-        callbackFunction(data);
-      }
+      determineDataDestination(endpoint, data);
+      callbackFunction(data);
     } catch (err) {
       addTextContent(statusMsg, 'h2', err);
     }
@@ -347,14 +347,22 @@ let lastDataRequest = navBtnCollection[0].value;
             }
         }
       );
-      document.querySelector(`#itemcard${index}`).addEventListener("click", () => {
-        //Add if else checking if movie ID has already been used (that way no reason to do new API-request)
-        apiRequest('', `movie/${element.id}/credits`, () => {updateModalContent(element);});
-      });
+      clickTitleCard(`#itemcard${index}`, element);
     });
     displayCardsOrError();
   }
 
+  //Makes new API-request for cast, unless same title has been previously displayed:
+  const clickTitleCard = (cardId, element) => {
+    document.querySelector(cardId).addEventListener("click", () => {
+      if (activeMovieId !== element.id) {
+        activeMovieId = element.id;
+        apiRequest('', `movie/${element.id}/credits`, () => {updateModalContent(element);});
+        return;
+      }
+      updateModalContent(element);
+    });
+  }
 
   //Creates new DOM-element:
   const createDomElement = (obj) => {
