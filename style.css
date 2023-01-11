@@ -18,6 +18,7 @@
 
     --cardHoverCol: red;
     --genreButtonCol: green;
+    --navButtonHoverCol: yellow;
 
     --border: 2px solid black;
     color: rgba(0,0,0,0.9);
@@ -114,7 +115,6 @@ header {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  background-color: blue;
   width: fit-content;
 }
 
@@ -125,24 +125,28 @@ header {
   background-repeat: no-repeat;
 }
 
-.insetBorder {
+.insetBorder, .category-button {
   box-shadow: 0px 0px 10px 3px #000 inset;
 }
 
 .category-button {
   text-decoration: none;
   cursor: pointer;
-  border: 0;
   font-family: var(--headerFont);
   font-size: var(--headerSmall);
   opacity: 0.5;
   transition: background-color 1s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.5s ease-in;
 }
 
+.category-button:hover {
+  background-color: var(--navButtonHoverCol);
+}
+
 .button-highlight {
-  background-color: yellow;
-  transform: translateY(-5px);
-  box-shadow: 4px 4px #000;
+  outline: 0;
+  border: 0;
+  transform: scale(1.1);
+  background-color: var(--navButtonHoverCol);
   font-weight: 900;
   opacity: 1;
 }
@@ -243,10 +247,17 @@ footer p {
 .filterlist {
     width: 20%;
     height: fit-content;
-    padding: 1em;
+    padding: 2em 1em 3em 1em;
     background-color:pink;
     font-family: var(--headerFont);
     font-size: var(--headerSmall);
+}
+
+.filterlist h2 {
+  padding: 0;
+  margin: 0;
+  line-height: 1em;
+  height: fit-content;
 }
 
 .filterlist p {
@@ -295,6 +306,7 @@ footer p {
 .cardwrapper {
   background-color:pink;
   width: 60%;
+  padding: 2em 1em 3em 1em;
 }
 
 .card {
@@ -320,7 +332,7 @@ footer p {
     transform: scale(1.1);
 }
 .card:hover img {
-    filter:brightness(200%);
+    filter: brightness(200%);
 }
 .card img {
     width: 160px;
