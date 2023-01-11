@@ -16,6 +16,8 @@
     --colorD: #51917A;
     --colorE: #A9DECB;
 
+    --cardHoverCol: red;
+
     --border: 2px solid black;
     color: rgba(0,0,0,0.9);
     background-color: var(--colorC);
@@ -290,7 +292,7 @@ footer p {
 }
 
 .cardwrapper {
-  background-color:green;
+  background-color:pink;
   width: 60%;
 }
 
@@ -312,14 +314,18 @@ footer p {
     font-size: var(--headerSmall);
 }
 .card:hover {
-    background-color: red;
+    background-color: var(--cardHoverCol);
     cursor: pointer;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    transform: scale(1.1);
+}
+.card:hover img {
+    filter:brightness(200%);
 }
 .card img {
     width: 160px;
     height: 240px;
     object-fit: cover;
+    transition: all 0.8s;
 }
 
 .textholder {

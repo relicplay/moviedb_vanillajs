@@ -451,6 +451,9 @@ let lastDataRequest = navBtnCollection[0].value;
           props: {
             src: {
               attributeValue: imageExists(actorImg)
+            },
+            alt: {
+              attributeValue: actorName
             }
           }
       }
