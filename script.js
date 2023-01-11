@@ -285,7 +285,7 @@ let lastDataRequest = navBtnCollection[0].value;
           parentElement: "movielist",
             props: {
               class: {
-                attributeValue: "card"
+                attributeValue: "card insetBorder"
               },
               id: {
                 attributeValue: `itemcard${index}`

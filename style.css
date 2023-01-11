@@ -115,6 +115,17 @@ header {
   width: fit-content;
 }
 
+.bgGradient {
+  background-image: linear-gradient(to bottom, black, transparent), linear-gradient(to top, black, transparent);
+  background-size: 100% 5px, 100% 10px;
+  background-position: center top, center bottom;
+  background-repeat: no-repeat;
+}
+
+.insetBorder {
+  box-shadow: 0px 0px 10px 3px #000 inset;
+}
+
 .category-button {
   text-decoration: none;
   cursor: pointer;
