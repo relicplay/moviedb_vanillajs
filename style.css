@@ -8,6 +8,8 @@
 :root {
 
   font-size: 100%;
+  --txtCol: rgba(0,0,0,0.9); 
+  color: var(--txtCol);
 
   --colorA: #9590A8;
   --colorB: #E5FFDE;
@@ -18,20 +20,21 @@
 
   /*#18020C*/
 
+  background-color: var(--colorC);
   --sectionBgColor: var(--colorA);
 
-  --cardHoverCol: red;
+  --cardCol: var(--colorE);
+  --cardHoverCol: #fff;
   --genreButtonCol: var(--colorE);
   --navButtonHoverCol: var(--colorE);
 
   --border: 2px solid black;
-  color: rgba(0,0,0,0.9);
-  background-color: var(--colorC);
 
-  --linkCol: #000;
-  --hoverCol: blue;
+  --hoverBoxShadeOuter: 0 0 10px #fff;
+  --hoverBoxShadeInner: 0px 0px 10px 3px #000 inset;
 
-  --itembox-bgcolor: white;
+  --linkCol: var(--txtCol);
+  --hoverCol: var(--colorD);
 
   --headerFont: 'Oswald', sans-serif;
   --regularFont: 'Roboto Slab', serif;
@@ -73,6 +76,11 @@ a:hover {
 
 input[type='checkbox'], label {
   cursor: pointer;
+}
+
+input[type='text']:hover, select:hover, .card:hover {
+  outline: none;
+  box-shadow: var(--hoverBoxShadeOuter);
 }
 
 body {
@@ -129,8 +137,13 @@ header {
   background-repeat: no-repeat;
 }
 
-.insetBorder, .category-button, .search-container button {
-  box-shadow: 0px 0px 10px 3px #000 inset;
+.insetBorder {
+  box-shadow: var(--hoverBoxShadeInner);
+  border-radius: 5px;
+}
+
+.category-button:hover, .button-highlight, .search-container button, .close-modal:hover, .search-container button:hover {
+  box-shadow: var(--hoverBoxShadeInner), var(--hoverBoxShadeOuter);
   border-radius: 5px;
 }
 
@@ -138,9 +151,12 @@ header {
   background-color: var(--colorE);
   text-decoration: none;
   cursor: pointer;
+  border: 0;
   font-family: var(--headerFont);
   font-size: var(--headerSmall);
   opacity: .5;
+  box-shadow: var(--hoverBoxShadeInner);
+  border-radius: 5px;
   transition: background-color 1s ease-out, opacity .5s ease-out, transform .5s ease-out, box-shadow .5s ease-in, color .5s ease-in;
 }
 
@@ -158,6 +174,7 @@ header {
   opacity: 1;
   color: #fff;
   mix-blend-mode: hard-light;
+  box-shadow: var(--hoverBoxShadeInner), var(--hoverBoxShadeOuter);
 }
 
 .mainmenu ul {
@@ -332,7 +349,7 @@ footer p {
   height: 350px;
   margin: 0;
   padding: 1em 0 1.5em 0;
-  background-color: var(--itembox-bgcolor);
+  background-color: var(--cardCol);
   border: 2px solid black;
   border-radius: 10px;
   transition: all 0.8s;
