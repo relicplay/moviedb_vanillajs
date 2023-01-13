@@ -148,18 +148,17 @@ lastDataRequest = navBtnCollection[0].value;
     addTextContent(statusMsg, 'h3', errDetails);
   };
 
+  //Replaces existing titleCards with updated ones:
+  const updateTitleCards = (obj) => {
+    clearElementContent("#movielist");
+    displayTitleCards(getFilteredObject(sortResult(obj)));
+  };
 
   //checks if titles exist, then updates title cards:
   const checkIfTitlesExist = (obj = data_stored) => {
     if (obj) {
       if (Object.keys(obj.results).length > 0) {updateTitleCards(obj);}
     }
-  };
-
-  //Replaces existing titleCards with updated ones:
-  const updateTitleCards = (obj) => {
-    clearElementContent("#movielist");
-    displayTitleCards(getFilteredObject(sortResult(obj)));
   };
 
   //Sorts result based on selected option in drop-down:
@@ -380,8 +379,7 @@ lastDataRequest = navBtnCollection[0].value;
         && title.vote_average <= voteaverageSlider.value
         && title.vote_count >= votecountSlider.value
         && checkTitleLanguageMatch(title)
-        && matchGenres(title)
-        ;
+        && matchGenres(title);
     });
   };
 
@@ -485,7 +483,8 @@ lastDataRequest = navBtnCollection[0].value;
 
   //Adds textcontent into any element of choice:
   const addTextContent = (parentElement, targetElement, txt) => {
-    return parentElement.querySelector(targetElement).textContent = txt;
+    const result = parentElement.querySelector(targetElement).textContent = txt;
+    return result;
   };
 
   //Clears all content inside any element of choice:
@@ -540,8 +539,14 @@ lastDataRequest = navBtnCollection[0].value;
   //Display the cards if there are any, otherwise error message:
   const displayCardsOrError = () => {
     addTextContent(statusMsg, 'h2', 'No titles found');
-    data_stored.results.length > 0 ? movieList.style.display = "grid" : movieList.style.display = "none";
-    movieList.style.display == "none" ? statusMsg.style.display = "flex" : statusMsg.style.display = "none";
+    movieList.style.display = "none";
+    statusMsg.style.display = "none";
+    if (data_stored.results.length > 0) {
+      movieList.style.display = "grid";
+    }
+    if (movieList.style.display == "none") {
+      statusMsg.style.display = "flex";
+    }
   };
 
   //If image path exists, returns image, else returns noimg:
@@ -552,7 +557,10 @@ lastDataRequest = navBtnCollection[0].value;
   //Changes size of logotype when user scrolls:
   const isScrolling = () => {
     const targetElement = document.querySelector("#navlogo").classList;
-    document.documentElement.scrollTop > 25 ? targetElement.add("navlogo-small") : targetElement.remove("navlogo-small");
+    targetElement.remove("navlogo-small");
+    if (document.documentElement.scrollTop > 25) {
+      targetElement.add("navlogo-small");
+    }
   };
   
   //Init data request from 1st button in main menu & highlights it:
