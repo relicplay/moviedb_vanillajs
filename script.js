@@ -72,7 +72,7 @@ lastDataRequest = navBtnCollection[0].value;
       if (highlightSelectedButton(element)) {
         apiRequest(element.value, url_discover);
       }
-    })
+    });
   });
   
   
@@ -81,12 +81,12 @@ lastDataRequest = navBtnCollection[0].value;
     document.querySelectorAll(".filterlist .slider, .filterlist #languageSelector, .filterlist #sortingSelector").forEach((element) => {
       const displaySliderValue = () => {
         if (element.className == "slider") {element.nextElementSibling.textContent = element.value;}
-      }
+      };
       displaySliderValue();
       element.addEventListener('input', () => {
         displaySliderValue();
         checkIfTitlesExist();
-      })
+      });
     });
   };
 
@@ -267,7 +267,7 @@ lastDataRequest = navBtnCollection[0].value;
       element.addEventListener('click', () => {
         countActiveButtons();
         checkIfTitlesExist();
-      })
+      });
     });
   };
 
@@ -534,7 +534,7 @@ lastDataRequest = navBtnCollection[0].value;
 
   //Adjusts padding top of main:
   const adjustPaddingTop = () => {
-    document.querySelector('main').style.paddingTop = (document.querySelector('header').offsetHeight * .5) + 'px';
+    document.querySelector('main').style.paddingTop = (document.querySelector('header').offsetHeight * 0.5) + 'px';
   };
 
   //Display the cards if there are any, otherwise error message:
@@ -546,7 +546,7 @@ lastDataRequest = navBtnCollection[0].value;
 
   //If image path exists, returns image, else returns noimg:
   const imageExists = (imgPath) => {
-    return imgPath !== null ? `${imgBaseUrl + imgPath}` : `images/noimg.png`
+    return imgPath !== null ? `${imgBaseUrl + imgPath}` : `images/noimg.png`;
   };
 
   //Changes size of logotype when user scrolls:
