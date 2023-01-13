@@ -90,6 +90,11 @@ lastDataRequest = navBtnCollection[0].value;
     });
   };
 
+  //Replaces existing titleCards with updated ones:
+  const updateTitleCards = (obj) => {
+    clearElementContent("#movielist");
+    displayTitleCards(getFilteredObject(sortResult(obj)));
+  };
   
   //General function for API-requests:
   const apiRequest = async (myRequest, endpoint, callbackFunction=updateTitleCards) => {
@@ -146,12 +151,6 @@ lastDataRequest = navBtnCollection[0].value;
     }
     addTextContent(statusMsg, 'h2', msg);
     addTextContent(statusMsg, 'h3', errDetails);
-  };
-
-  //Replaces existing titleCards with updated ones:
-  const updateTitleCards = (obj) => {
-    clearElementContent("#movielist");
-    displayTitleCards(getFilteredObject(sortResult(obj)));
   };
 
   //checks if titles exist, then updates title cards:
