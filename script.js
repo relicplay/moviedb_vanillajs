@@ -1,14 +1,16 @@
+//API-related settings:
 const baseUrl = 'https://api.themoviedb.org/3/';
+const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
 const url_discover = 'discover/movie';
 const url_search = 'search/movie';
 const url_genres = 'genre/movie/list';
 const url_languages = 'configuration/languages';
-const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
 
-const modal = document.querySelector('#myModal');
-const closeModalBtn = document.querySelector('.close-modal');
-const searchBtn = document.querySelector('.search-container button');
+//DOM-related settings:
+const modal = document.querySelector("#myModal");
+const closeModalBtn = document.querySelector(".close-modal");
+const searchBtn = document.querySelector(".search-container button");
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
 
 const popularitySlider = document.querySelector("#popularityrange");
@@ -18,7 +20,7 @@ const votecountSlider = document.querySelector("#votecountrange");
 const statusMsg = document.querySelector(".statusmessage");
 const movieList = document.querySelector("#movielist");
 
-
+//Variables for handling and/or storing results:
 let genreBtnCollection,
 data_stored,
 genres_list,
@@ -26,25 +28,19 @@ languages_list,
 cast_list,
 activeMovieId = -1,
 selectedGenres = [],
-modalData = [];
+modalData = [],
+lastDataRequest = navBtnCollection[0].value;
 
-let lastDataRequest = navBtnCollection[0].value;
 
 
-  window.addEventListener("scroll", () => {
-    const targetElement = document.querySelector("#navlogo").classList;
-    document.documentElement.scrollTop > 25
-    ? targetElement.add("navlogo-small")
-    : targetElement.remove("navlogo-small");
-    adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
-  }
-  );
-
-  
-  window.addEventListener("resize", () => {
-    adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
-  }
-  );
+  //Alters top menu scaling when scrolling or resizing:
+  ['scroll', 'resize'].forEach((event) => {
+    window.addEventListener(event, () => {
+      if (event === "scroll") {isScrolling();}
+      adjustPaddingTop();
+    }
+    );
+  });
 
 
   document.body.addEventListener("click", (event) => {
@@ -56,12 +52,10 @@ let lastDataRequest = navBtnCollection[0].value;
   }
   );
 
-  
   searchBtn.addEventListener("click", () => {
     performAPISearch(document.querySelector('#search').value);
   }
   );
-
 
   document.body.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
@@ -70,7 +64,6 @@ let lastDataRequest = navBtnCollection[0].value;
     }
   });
 
-  
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
       removeClassFromElements(navBtnCollection, "button-highlight");
@@ -536,9 +529,9 @@ let lastDataRequest = navBtnCollection[0].value;
     });
   }
 
-  //Adjusts padding top of element y based on height of x:
-  const adjustPaddingTop = (x, y) => {
-    y.style.paddingTop = (x.offsetHeight * .5) + 'px';
+  //Adjusts padding top of main:
+  const adjustPaddingTop = () => {
+    document.querySelector('main').style.paddingTop = (document.querySelector('header').offsetHeight * .5) + 'px';
   }
 
   //Display the cards if there are any, otherwise error message:
@@ -555,6 +548,14 @@ let lastDataRequest = navBtnCollection[0].value;
   //If image path exists, returns image, else returns noimg:
   const imageExists = (imgPath) => {
     return imgPath !== null ? `${imgBaseUrl + imgPath}` : `images/noimg.png`
+  }
+
+  //Changes size of logotype when user scrolls:
+  const isScrolling = () => {
+    const targetElement = document.querySelector("#navlogo").classList;
+    document.documentElement.scrollTop > 25
+    ? targetElement.add("navlogo-small")
+    : targetElement.remove("navlogo-small");
   }
   
   //Init data request from 1st button in main menu & highlights it:
