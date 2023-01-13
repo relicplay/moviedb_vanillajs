@@ -585,7 +585,7 @@ input[type='checkbox']:checked+label {
   }
   .search-container {
     margin-top: 1em;
-    width: 100%;
+    width: 90%;
     justify-content: space-between;
     gap: 0 1em;
   }
@@ -600,8 +600,14 @@ input[type='checkbox']:checked+label {
     flex-flow: column nowrap;
     gap: .5em 0;
   }
+  .mainmenu ul li {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
   .mainmenu button {
-    width: 80%;
+    width: 90%;
   }
   main {
     flex-flow: column nowrap;
