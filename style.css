@@ -235,7 +235,6 @@ footer p {
 }
 
 .search-container {
-  background-color: orange;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -584,6 +583,7 @@ input[type='checkbox']:checked+label {
     width: 100px;
   }
   .search-container {
+    align-self: center;
     margin-top: 1em;
     width: 90%;
     justify-content: space-between;
