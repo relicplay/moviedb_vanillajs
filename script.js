@@ -98,7 +98,6 @@ lastDataRequest = navBtnCollection[0].value;
     try {
       const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
       const data = await res.json();
-      console.log(data);
       if (!res.ok) {
         statusCodes(res.status, data.status_message);
         return;
@@ -106,9 +105,12 @@ lastDataRequest = navBtnCollection[0].value;
       determineDataDestination(endpoint, data);
       callbackFunction(data);
     } catch (err) {
-      addTextContent(statusMsg, 'h2', err);
-      console.log(err);
+      handleErr(err);
     }
+  }
+
+  const handleErr = (err) => {
+    addTextContent(statusMsg, 'h2', err);
   }
 
   //Decides which variable should store fetched API-data:
@@ -542,10 +544,6 @@ lastDataRequest = navBtnCollection[0].value;
     addTextContent(statusMsg, 'h2', 'No titles found');
     data_stored.results.length > 0 ? movieList.style.display = "grid" : movieList.style.display = "none";
     movieList.style.display == "none" ? statusMsg.style.display = "flex" : statusMsg.style.display = "none";
-  }
-
-  const setCast = (data) => {
-    console.log('Display cast here:', data.cast);
   }
 
   //If image path exists, returns image, else returns noimg:
