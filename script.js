@@ -66,6 +66,7 @@ lastDataRequest = navBtnCollection[0].value;
     }
   });
 
+  //Highlights selected nav-button & performs API-request:
   navBtnCollection.forEach((element) => {
     element.addEventListener('click', () => {
       removeClassFromElements(navBtnCollection, "button-highlight");
