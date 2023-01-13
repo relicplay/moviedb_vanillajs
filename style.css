@@ -239,6 +239,7 @@ footer p {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  gap: .5em;
 }
 
 .search-container button {
@@ -629,6 +630,7 @@ input[type='checkbox']:checked+label {
   .filterlist {
     width: 100%;
     padding-top: 4vh;
+    margin-bottom: 2em;
   }
   h1 {
     font-size: var(--headerMedium);
