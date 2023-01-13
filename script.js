@@ -42,7 +42,7 @@ lastDataRequest = navBtnCollection[0].value;
     );
   });
 
-
+  //Closes modal if either clicking outside or close-button:
   document.body.addEventListener("click", (event) => {
     switch(event.target) {
       case modal:
@@ -52,13 +52,15 @@ lastDataRequest = navBtnCollection[0].value;
   }
   );
 
+  //Performs title-search on click:
   searchBtn.addEventListener("click", () => {
     performAPISearch(document.querySelector('#search').value);
   }
   );
 
-  document.body.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
+  //Performs title-search on pressing enter:
+  document.body.addEventListener("keypress", (event) => {
+    if (event.key === "Enter" && document.activeElement === document.querySelector('#search')) {
         event.preventDefault();
         searchBtn.click();
     }
