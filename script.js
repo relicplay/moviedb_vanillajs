@@ -24,11 +24,9 @@ const movieList = document.querySelector("#movielist");
 let genreBtnCollection,
 data_stored,
 genres_list,
-languages_list,
 cast_list,
 activeMovieId = -1,
 selectedGenres = [],
-modalData = [],
 lastDataRequest = navBtnCollection[0].value;
 
 
@@ -554,9 +552,7 @@ lastDataRequest = navBtnCollection[0].value;
   //Changes size of logotype when user scrolls:
   const isScrolling = () => {
     const targetElement = document.querySelector("#navlogo").classList;
-    document.documentElement.scrollTop > 25
-    ? targetElement.add("navlogo-small")
-    : targetElement.remove("navlogo-small");
+    document.documentElement.scrollTop > 25 ? targetElement.add("navlogo-small") : targetElement.remove("navlogo-small");
   }
   
   //Init data request from 1st button in main menu & highlights it:
