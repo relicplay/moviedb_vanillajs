@@ -88,7 +88,7 @@ lastDataRequest = navBtnCollection[0].value;
         checkIfTitlesExist();
       })
     });
-  }
+  };
 
   
   //General function for API-requests:
@@ -105,11 +105,11 @@ lastDataRequest = navBtnCollection[0].value;
     } catch (err) {
       handleErr(err);
     }
-  }
+  };
 
   const handleErr = (err) => {
     addTextContent(statusMsg, 'h2', err);
-  }
+  };
 
   //Decides which variable should store fetched API-data:
   const determineDataDestination = (endpoint, data) => {
@@ -126,7 +126,7 @@ lastDataRequest = navBtnCollection[0].value;
       default:
         data_stored = data;
     }
-  }
+  };
 
   //Displays error messages in DOM:
   const statusCodes = (status, errDetails) => {
@@ -146,7 +146,7 @@ lastDataRequest = navBtnCollection[0].value;
     }
     addTextContent(statusMsg, 'h2', msg);
     addTextContent(statusMsg, 'h3', errDetails);
-  }
+  };
 
 
   //checks if titles exist, then updates title cards:
@@ -154,13 +154,13 @@ lastDataRequest = navBtnCollection[0].value;
     if (obj) {
       if (Object.keys(obj.results).length > 0) {updateTitleCards(obj);}
     }
-  }
+  };
 
   //Replaces existing titleCards with updated ones:
   const updateTitleCards = (obj) => {
     clearElementContent("#movielist");
     displayTitleCards(getFilteredObject(sortResult(obj)));
-  }
+  };
 
   //Sorts result based on selected option in drop-down:
   const sortResult = (obj) => {
@@ -191,7 +191,7 @@ lastDataRequest = navBtnCollection[0].value;
         sortingType = (a, b) => b.popularity - a.popularity;
     }
     return obj.results.sort(sortingType);
-  }
+  };
 
   //Adds all available languages into the drop-down list:
   const populateLanguageList = (languageList) => {
@@ -215,7 +215,7 @@ lastDataRequest = navBtnCollection[0].value;
       );
     }
     );
-  }
+  };
 
   //Creates & displays buttons for each individual genre:
   const displayGenreButtons = (genreList) => {
@@ -257,7 +257,7 @@ lastDataRequest = navBtnCollection[0].value;
         );
     });
     clickGenreButtons();
-  }
+  };
 
   //Checks if genre-button is clicked:
   const clickGenreButtons = () => {
@@ -269,7 +269,7 @@ lastDataRequest = navBtnCollection[0].value;
         checkIfTitlesExist();
       })
     });
-  }
+  };
 
 
   //Creates & displays clickable cards for each individual title:
@@ -347,7 +347,7 @@ lastDataRequest = navBtnCollection[0].value;
       clickTitleCard(`#itemcard${index}`, element);
     });
     displayCardsOrError();
-  }
+  };
 
   //Makes new API-request for cast, unless same title has been previously displayed:
   const clickTitleCard = (cardId, element) => {
@@ -359,7 +359,7 @@ lastDataRequest = navBtnCollection[0].value;
       }
       updateModalContent(element);
     });
-  }
+  };
 
   //Creates new DOM-element:
   const createDomElement = (obj) => {
@@ -370,7 +370,7 @@ lastDataRequest = navBtnCollection[0].value;
       const textnode = obj.elementContent ? obj.elementContent : '';
       newElement.appendChild(document.createTextNode(textnode));
       document.getElementById(obj.parentElement).appendChild(newElement);
-  }
+  };
 
 
   //Returns a filtered version of object based on the form parameters:
@@ -383,7 +383,7 @@ lastDataRequest = navBtnCollection[0].value;
         && matchGenres(title)
         ;
     });
-  }
+  };
 
   //Checks if title's language matches drop-down option:
   const checkTitleLanguageMatch = (title) => {
@@ -393,7 +393,7 @@ lastDataRequest = navBtnCollection[0].value;
         return true;
     }
     return false;
-  }
+  };
 
   
   const matchGenres = (title) => {
@@ -405,7 +405,7 @@ lastDataRequest = navBtnCollection[0].value;
     });
     if (matchesFound > 0) {return true;}
     return false;
-  }
+  };
 
 
   //Updates content of the modal:
@@ -423,7 +423,7 @@ lastDataRequest = navBtnCollection[0].value;
     cast_list.cast.slice(0, 8).map((key) => {createActorCard(key.id, key.name, key.profile_path);});
     addTextContent(movieDetailsList, '#movieGenres', movieTitleData.genre_ids.map(g => getGenreNameById(g, genres_list.genres)).join(', '));
     modal.style.display = "block";
-  }
+  };
 
   const createActorCard = (actorId, actorName, actorImg) => {
     createDomElement(
@@ -466,13 +466,13 @@ lastDataRequest = navBtnCollection[0].value;
           }
       }
     );
-  }
+  };
 
   //Returns the name of genre id:
   const getGenreNameById = (id, obj) => {
     const gname = obj.find(x => x.id === id).name;
     return gname !== undefined ? gname : 'Unknown';
-  }
+  };
 
   //Searches for title based on user input:
   const performAPISearch = (inputValue) => {
@@ -481,24 +481,24 @@ lastDataRequest = navBtnCollection[0].value;
       apiRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, updateTitleCards);
       document.querySelector('#search').value = '';
     }
-  }
+  };
 
   //Adds textcontent into any element of choice:
   const addTextContent = (parentElement, targetElement, txt) => {
     return parentElement.querySelector(targetElement).textContent = txt;
-  }
+  };
 
   //Clears all content inside any element of choice:
   const clearElementContent = (targetId) => {
     const element = document.querySelector(targetId);
     while (element.firstChild) element.removeChild(element.firstChild);
-  }
+  };
 
   //Highlights selected button & stores its value:
   const highlightSelectedButton = (element) => {
     element.classList.add("button-highlight");
     return compareDataWithApi(element.value);
-  }
+  };
 
   //compares stored data with API-request:
   const compareDataWithApi = (element) => {
@@ -507,20 +507,20 @@ lastDataRequest = navBtnCollection[0].value;
       return true;
     }
     return false;
-  }
+  };
 
   //Removes css-class of all elements:
   const removeClassFromElements = (targetElements, styleToRemove) => {
     targetElements.forEach(element => {
       element.classList.remove(styleToRemove);
     });
-  }
+  };
 
   //Checks & returns element if length > 0, else returns string of choice:
   const getStringLength = (element, stringToReturn) => {
     if (!element) {return stringToReturn;}
     return element.length > 0 ? element : stringToReturn;
-  }
+  };
 
   //Refreshes the list of user-selected genres:
   const countActiveButtons = () => {
@@ -530,30 +530,30 @@ lastDataRequest = navBtnCollection[0].value;
         selectedGenres.push(element.value);
       }
     });
-  }
+  };
 
   //Adjusts padding top of main:
   const adjustPaddingTop = () => {
     document.querySelector('main').style.paddingTop = (document.querySelector('header').offsetHeight * .5) + 'px';
-  }
+  };
 
   //Display the cards if there are any, otherwise error message:
   const displayCardsOrError = () => {
     addTextContent(statusMsg, 'h2', 'No titles found');
     data_stored.results.length > 0 ? movieList.style.display = "grid" : movieList.style.display = "none";
     movieList.style.display == "none" ? statusMsg.style.display = "flex" : statusMsg.style.display = "none";
-  }
+  };
 
   //If image path exists, returns image, else returns noimg:
   const imageExists = (imgPath) => {
     return imgPath !== null ? `${imgBaseUrl + imgPath}` : `images/noimg.png`
-  }
+  };
 
   //Changes size of logotype when user scrolls:
   const isScrolling = () => {
     const targetElement = document.querySelector("#navlogo").classList;
     document.documentElement.scrollTop > 25 ? targetElement.add("navlogo-small") : targetElement.remove("navlogo-small");
-  }
+  };
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
@@ -563,6 +563,6 @@ lastDataRequest = navBtnCollection[0].value;
     highlightSelectedButton(navBtnCollection[0]);
     initFilterControls();
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
-  }
+  };
 
   init();
