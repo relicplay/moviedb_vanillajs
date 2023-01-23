@@ -1,11 +1,12 @@
 //API-related settings:
 const baseUrl = 'https://api.themoviedb.org/3/';
 const imgBaseUrl = 'https://image.tmdb.org/t/p/w300/';
-const apiKey = '?api_key=639d3b6ab1d15163c1ac63fbf9db3a9e';
+let apiKey = '';
 const url_discover = 'discover/movie';
 const url_search = 'search/movie';
 const url_genres = 'genre/movie/list';
 const url_languages = 'configuration/languages';
+
 
 //DOM-related settings:
 const modal = document.querySelector("#myModal");
@@ -99,7 +100,8 @@ lastDataRequest = navBtnCollection[0].value;
   //General function for API-requests:
   const apiRequest = async (myRequest, endpoint, callbackFunction=updateTitleCards) => {
     try {
-      const res = await fetch(`${baseUrl+endpoint+apiKey+myRequest}`);
+      const request = endpoint != apiKey ? `${baseUrl+endpoint+apiKey+myRequest}` : myRequest;
+      const res = await fetch(request);
       const data = await res.json();
       if (!res.ok) {
         statusCodes(res.status, data.status_message);
@@ -120,6 +122,9 @@ lastDataRequest = navBtnCollection[0].value;
   const determineDataDestination = (endpoint, data) => {
     if (endpoint.includes('/credits')) {endpoint = "cast";}
     switch(endpoint) {
+      case apiKey:
+        apiKey = data.apiKey;
+        break;
       case url_genres:
         genres_list = data;
         break;
@@ -561,6 +566,7 @@ lastDataRequest = navBtnCollection[0].value;
       targetElement.add("navlogo-small");
     }
   };
+
   
   //Init data request from 1st button in main menu & highlights it:
   const init = () => {
@@ -572,4 +578,4 @@ lastDataRequest = navBtnCollection[0].value;
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
   };
 
-  init();
+  apiRequest('./apikey.json', apiKey, init);
