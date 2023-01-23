@@ -3,7 +3,7 @@ Single-page application fetching data from themoviedb API, using HTML5, CSS3, an
 
 ## API-key
 
-An api-key from tmdb is required in order to make requests. API-key is not included in this repo.
+An api-key from TMDB is required in order to make requests. API-key is not included in this repo.
 Please follow these steps to make requests:
 
 >
