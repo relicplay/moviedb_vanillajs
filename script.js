@@ -412,7 +412,7 @@ lastDataRequest = navBtnCollection[0].value;
 
   //Updates content of the modal:
   const updateModalContent = (movieTitleData) => {
-    const header = document.querySelector('.modal-header');
+    const header = document.querySelector('#modal-header');
     const movieDetailsList = document.querySelector('.modal-moviedetails');
     header.style.backgroundImage = `url(${imgBaseUrl}${movieTitleData.backdrop_path})`;
     addTextContent(header, 'h1', movieTitleData.title);

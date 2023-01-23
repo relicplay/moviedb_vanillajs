@@ -472,7 +472,7 @@ input[type='checkbox']:checked+label {
   max-width: 800px;
 }
 
-.modal-header {
+#modal-header {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -485,7 +485,7 @@ input[type='checkbox']:checked+label {
   border-bottom: 2px solid black;
 }
 
-.modal-header h1 {
+#modal-header h1 {
   display: block;
   width: fit-content;
   min-width: 50%;
