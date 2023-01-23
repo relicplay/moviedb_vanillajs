@@ -29,3 +29,9 @@ Please follow these steps to make requests:
 > The apikey.json file was found, but it's empty. Please follow the step under *API-key* and add the proper code.
 >
 
+>
+> ### TypeError: NetworkError when attempting to fetch resource.
+>
+> You need to run index.html on a liveserver, for example via Visual Studio Code.
+>
+
