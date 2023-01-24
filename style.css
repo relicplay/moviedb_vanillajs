@@ -106,7 +106,14 @@ body {
 }
 
 
-header {
+.mainmenu {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: fit-content;
+}
+
+.main-header {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -120,14 +127,6 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-}
-
-
-.mainmenu {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  width: fit-content;
 }
 
 .bgGradient {
@@ -498,33 +497,53 @@ input[type='checkbox']:checked+label {
   background-position: center;
 }
 
-.modal-moviedetails {
+
+.modal-moviedetails, .moviedetails-block {
   display: flex;
   flex-flow: row wrap;
-  padding-bottom: 2em;
+  align-items: flex-start;
+  width: 50%;
+  margin: 0;
 }
 
-.modal-moviedetails div {
+.modal-moviedetails {
+  width: 100%;
+}
+
+.modal-moviedetails dt, .modal-moviedetails dd {
   display: block;
   box-sizing: border-box;
   width: 50%;
+  margin: 0;
   padding: 0.5em 1em;
   font-family: var(--headerFont);
   font-size: var(--headerSmall);
   font-weight: 700;
 }
 
-.modal-moviedetails div:nth-child(even) {
+
+.cast-block {
+  margin: 0;
+  width: 100%;
+}
+.cast-block dt {
+  width: 100%;
+}
+
+.moviedetails-block dd {
   text-align: right;
   font-weight: normal;
 }
 
-.modal-moviedetails div:nth-last-child(1), .modal-moviedetails div:nth-last-child(2) {
+.modal-moviedetails .moviedetails-block:nth-child(2) dt {
   width: 100%;
-  text-align: left;
+  margin: 0;
+  height: fit-content;
 }
 
-.modal-moviedetails div:nth-last-child(1) {
+#movieOverview {
+  text-align: left;
+  width: 100%;
   font-family: var(--regularFont);
   font-size: var(--regularMedium);
   font-style: italic;
@@ -621,12 +640,14 @@ input[type='checkbox']:checked+label {
   #movielist {
     justify-items: center;
   }
-  .modal-moviedetails div {
+  .moviedetails-block, .moviedetails-block dt, .moviedetails-block dd {
     width: 100%;
-  }
-  .modal-moviedetails div:nth-child(even) {
     text-align: left;
+    height: fit-content;
   }
+  .moviedetails-block dt, .moviedetails-block dd {
+    padding: 0 0 0 1em;
+   }
   .filterlist {
     width: 100%;
     padding-top: 4vh;

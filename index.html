@@ -14,7 +14,7 @@
 
     <div class="wrapper">
 
-    <header class="bgGradient">
+    <header class="main-header bgGradient">
         <img src="images/logo.svg" alt="logo" class="navlogo" id="navlogo">
         <nav class="mainmenu">
             <ul>
@@ -98,26 +98,42 @@
 
     </div>
 
+
+
+    
     <div id="myModal" class="modal">
 
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modal-header">
+            <button class="close-modal" aria-label="Close">&times;</button>
+            <header id="modal-header">
                 <h1>Movie Title:</h1>
-            </div>
-            <div class="modal-moviedetails">
-                <div>Original title:</div><div id="movieOgTitle"></div>
-                <div>Release date:</div><div id="movieDate"></div>
-                <div>Original language:</div><div id="movieOgLang"></div>
-                <div>Adult:</div><div id="movieAdult"></div>
-                <div>Genres:</div><div id="movieGenres"></div>
-                <div>Cast:</div><div id="movieCast" class="bgGradient"></div>
-                <div>Overview:</div>
-                <div id="movieOverview">Info goes here</div>
-            </div>
+            </header>
+            <section class="modal-moviedetails">
+                <dl class="moviedetails-block">
+                    <dt>Original title:</dt>
+                    <dd id="movieOgTitle"></dd>
+                    <dt>Release date:</dt>
+                    <dd id="movieDate"></dd>
+                    <dt>Original language:</dt>
+                    <dd id="movieOgLang"></dd>
+                    <dt>Adult:</dt>
+                    <dd id="movieAdult"></dd>
+                    <dt>Genres:</dt>
+                    <dd id="movieGenres"></dd>
+                </dl>
+                <dl class="moviedetails-block">
+                    <dt>Overview:</dt>
+                    <dd id="movieOverview">Info goes here</dd>
+                </dl>
+                <dl class="cast-block">
+                    <dt>Cast:</dt>
+                    <dd id="movieCast" class="bgGradient"></dd>
+                </dl>
+            </section>
         </div>
   
     </div>
+    
     
 
 </body>
