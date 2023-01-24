@@ -11,7 +11,7 @@ const url_languages = 'configuration/languages';
 //DOM-related settings:
 const modal = document.querySelector("#myModal");
 const closeModalBtn = document.querySelector(".close-modal");
-const searchBtn = document.querySelector(".search-container button");
+const searchBtn = document.querySelector(".search-button");
 const navBtnCollection = document.querySelectorAll(".mainmenu button");
 
 const popularitySlider = document.querySelector("#popularityrange");
@@ -53,13 +53,13 @@ lastDataRequest = navBtnCollection[0].value;
 
   //Performs title-search on click:
   searchBtn.addEventListener("click", () => {
-    performAPISearch(document.querySelector('#search').value);
+    performAPISearch(document.querySelector('#search-input').value);
   }
   );
 
   //Performs title-search on pressing enter:
   document.body.addEventListener("keypress", (event) => {
-    if (event.key === "Enter" && document.activeElement === document.querySelector('#search')) {
+    if (event.key === "Enter" && document.activeElement === document.querySelector('#search-input')) {
         event.preventDefault();
         searchBtn.click();
     }
@@ -481,7 +481,7 @@ lastDataRequest = navBtnCollection[0].value;
     if (inputValue.length > 0 && compareDataWithApi(inputValue)) {
       removeClassFromElements(navBtnCollection, "button-highlight");
       apiRequest(`&query=${inputValue.replace(/ /g,"+")}`, url_search, updateTitleCards);
-      document.querySelector('#search').value = '';
+      document.querySelector('#search-input').value = '';
     }
   };
 

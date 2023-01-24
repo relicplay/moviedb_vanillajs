@@ -267,7 +267,7 @@ footer p {
   background-repeat: no-repeat;
 }
 
-#search {
+#search-input {
   font-family: var(--headerFont);
   font-size: var(--headerSmall);
 }
