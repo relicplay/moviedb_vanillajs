@@ -14,18 +14,26 @@
 
     <div class="wrapper">
 
-    <header class="main-header bgGradient">
-        <img src="images/logo.svg" alt="logo" class="navlogo" id="navlogo">
-        <nav class="mainmenu">
-            <ul>
-                <li><button value="&sort_by=popularity.desc" class="category-button">Most popular movies</button></li>
-                <li><button value="&with_genres=18&sort_by=vote_average.desc&vote_count.gte=10" class="category-button">Best dramas</button></li>
-                <li><button value="&primary_release_year=1995&vote_count.gte=10&sort_by=vote_average.desc" class="category-button">Top 1995</button></li>
-                <li><button value="&with_genres=878&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31&vote_count.gte=10" class="category-button">Best 80's Sci-fi</button></li>
-                <li><button value="&with_genres=27&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31&vote_count.gte=10" class="category-button">Best 80's Horror</button></li>
+    <header class="main-header bgGradient" role="banner">
+        <img src="images/logo.svg" alt="logo" class="navlogo" id="navlogo" role="banner">
+        <nav class="mainmenu" role="navigation">
+            <ul role="menu">
+                <li role="menuitem">
+                    <button value="&sort_by=popularity.desc" class="category-button" role="button" aria-label="View most popular movies">Most popular movies</button>
+                </li>
+                <li role="menuitem">
+                    <button value="&with_genres=18&sort_by=vote_average.desc&vote_count.gte=10" class="category-button" role="button" aria-label="View best dramas">Best dramas</button>
+                </li>
+                <li role="menuitem">
+                    <button value="&primary_release_year=1995&vote_count.gte=10&sort_by=vote_average.desc" class="category-button" role="button" aria-label="View top movies of 1995">Top 1995</button>
+                </li>
+                <li role="menuitem">
+                    <button value="&with_genres=878&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31&vote_count.gte=10" class="category-button" role="button" aria-label="View best 1980s sci-fi movies">Best 80's Sci-fi</button>
+                </li>
+                <li role="menuitem">
+                    <button value="&with_genres=27&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31&vote_count.gte=10" class="category-button" role="button" aria-label="View best 1980s horror movies">Best 80's Horror</button>
+                </li>
             </ul>
-            
-            
         </nav>
         <div class="search-container">
             <input type="text" placeholder="Search..." id="search-input" autocomplete="on" pattern="[^']+" maxlength="90">
