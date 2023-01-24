@@ -289,11 +289,20 @@ footer p {
   height: fit-content;
 }
 
-.filterlist p {
+.filterlist label {
+  width: 100%;
+  display: block;
+}
+
+.filterlist p, #genreboxes, .form-group {
   width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+}
+
+#sliders {
+  width: 100%;
 }
 
 .filterlist label {

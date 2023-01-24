@@ -46,43 +46,53 @@
 
         <aside class="filterlist inset-border">
 
-                <h2>Filter:</h2>
-                <p>
-                    <label for="sortingSelector">Sorting:</label>
-                    <select id="sortingSelector">
-                        <option value="popFall">Popularity falling</option>
-                        <option value="popAsc">Popularity ascending</option>
-                        <option value="ratFall">Ratings falling</option>
-                        <option value="ratAsc">Ratings ascending</option>
-                        <option value="relFall">Release date falling</option>
-                        <option value="relAsc">Release date ascending</option>
-                        <option value="titFall">Title A-Ö</option>
-                        <option value="titAsc">Title Ö-A</option>
-                    </select>
-                </p>
-                <p>
-                    <label for="languageSelector">Language:</label>
-                    <select id="languageSelector">
-                        <option value="all">All</option>
-                    </select>
-                </p>
-                <p id="genreboxes">
-                <p>
-                    <label for="popularityrange">Popularity:</label>
-                    <input type="range" min="1" max="5000" value="1" class="slider" id="popularityrange" step="1">
-                    <span id="popularityrange-display"></span>
-                </p>
-                <p>
-                    <label for="voterange">Vote average:</label>
-                    <input type="range" min="1" max="10" value="10" class="slider" id="voterange" step="0.1">
-                    <span id="voterrange-display"></span>
-                </p>
-                <p>
-                    <label for="votecountrange">Least number of votes:</label>
-                    <input type="range" min="0" max="500" value="0" class="slider" id="votecountrange" step="1">
-                    <span id="votecountrange-display"></span>
-                </p>
+            <h2>Filter:</h2>
 
+            <div>
+                <label for="sortingSelector">Sort by:</label>
+                <select id="sortingSelector" aria-label="Sort by">
+                    <option value="popFall">Popularity (decreasing)</option>
+                    <option value="popAsc">Popularity (increasing)</option>
+                    <option value="ratFall">Ratings (decreasing)</option>
+                    <option value="ratAsc">Ratings (increasing)</option>
+                    <option value="relFall">Release date (newest first)</option>
+                    <option value="relAsc">Release date (oldest first)</option>
+                    <option value="titFall">Title (A-Ö)</option>
+                    <option value="titAsc">Title (Ö-A)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="languageSelector">Language:</label>
+                <select id="languageSelector" aria-label="Select language">
+                  <option value="all">All</option>
+                </select>
+            </div>
+
+            <fieldset id="genreboxes">
+                <legend>Genres</legend>
+            </fieldset>
+
+            <fieldset id="sliders">
+                <legend>Other settings</legend>
+                <div class="form-group">
+                    <label for="popularityrange">Popularity:</label>
+                    <input type="range" min="1" max="5000" value="1" class="slider" id="popularityrange" step="1" aria-label="Select popularity range" aria-describedby="popularityrange-display">
+                    <span id="popularityrange-display"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="voterange">Vote average:</label>
+                    <input type="range" min="1" max="10" value="10" class="slider" id="voterange" step="0.1" aria-label="Select vote average range" aria-describedby="voterrange-display">
+                    <span id="voterrange-display"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="votecountrange">Least number of votes:</label>
+                    <input type="range" min="0" max="500" value="0" class="slider" id="votecountrange" step="1" aria-label="Select least number of votes range" aria-describedby="votecountrange-display">
+                    <span id="votecountrange-display"></span>
+                </div>
+            </fieldset>
               
             </aside>
         
