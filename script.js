@@ -18,7 +18,7 @@ const popularitySlider = document.querySelector("#popularityrange");
 const voteaverageSlider = document.querySelector("#voterange");
 const votecountSlider = document.querySelector("#votecountrange");
 
-const statusMsg = document.querySelector(".statusmessage");
+const statusMsg = document.querySelector(".status-message");
 const movieList = document.querySelector("#movielist");
 
 //Variables for handling and/or storing results:
@@ -115,7 +115,7 @@ lastDataRequest = navBtnCollection[0].value;
   };
 
   const handleErr = (err) => {
-    addTextContent(statusMsg, 'h2', err);
+    addTextContent(statusMsg, 'h1', err);
   };
 
   //Decides which variable should store fetched API-data:
@@ -154,8 +154,8 @@ lastDataRequest = navBtnCollection[0].value;
       default:
         msg = "Unknown error";
     }
-    addTextContent(statusMsg, 'h2', msg);
-    addTextContent(statusMsg, 'h3', errDetails);
+    addTextContent(statusMsg, 'h1', msg);
+    addTextContent(statusMsg, 'p', errDetails);
   };
 
   //checks if titles exist, then updates title cards:
@@ -542,7 +542,7 @@ lastDataRequest = navBtnCollection[0].value;
 
   //Display the cards if there are any, otherwise error message:
   const displayCardsOrError = () => {
-    addTextContent(statusMsg, 'h2', 'No titles found');
+    addTextContent(statusMsg, 'h1', 'No titles found');
     movieList.style.display = "none";
     statusMsg.style.display = "none";
     if (data_stored.results.length > 0) {
