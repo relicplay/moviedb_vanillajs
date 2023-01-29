@@ -567,12 +567,11 @@ lastDataRequest = navBtnCollection[0].value;
     }
   };
 
-  
   //Init data request from 1st button in main menu & highlights it:
-  const init = () => {
-    apiRequest('', url_languages, populateLanguageList);
-    apiRequest('', url_genres, displayGenreButtons);
-    apiRequest(navBtnCollection[0].value, url_discover);
+  const init = async () => {
+    await apiRequest('', url_languages, populateLanguageList);
+    await apiRequest('', url_genres, displayGenreButtons);
+    await apiRequest(navBtnCollection[0].value, url_discover);
     highlightSelectedButton(navBtnCollection[0]);
     initFilterControls();
     adjustPaddingTop(document.querySelector('header'), document.querySelector('main'));
