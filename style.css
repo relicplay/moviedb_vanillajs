@@ -623,20 +623,25 @@ input[type='checkbox']:checked+label {
   }
   .mainmenu {
     width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+	  white-space: nowrap;
   }
   .mainmenu ul {
     display: flex;
-    flex-flow: column nowrap;
-    gap: .5em 0;
+    flex-flow: row nowrap;
+    padding: .5em 1em;
+    gap: .5em 2em;
   }
   .mainmenu ul li {
-    width: 100%;
+    width: fit-content;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
   }
-  .mainmenu button {
-    width: 90%;
+  .mainmenu ul li:last-child {
+    padding-right: 1em;
   }
   main {
     flex-flow: column nowrap;
