@@ -500,8 +500,26 @@ lastDataRequest = navBtnCollection[0].value;
   //Highlights selected button & stores its value:
   const highlightSelectedButton = (element) => {
     element.classList.add("button-highlight");
+    centerSelectedButton(element);
     return compareDataWithApi(element.value);
   };
+
+  const centerSelectedButton = (objToCenter) => {
+    const scrollObj = document.querySelector(".mainmenu");
+    const parentWidth = scrollObj.offsetWidth;
+    const objWidth = objToCenter.offsetWidth;
+    const objLeft = objToCenter.offsetLeft;
+    const objCenter = objLeft + (objWidth / 2);
+    const scrollLeft = objCenter - (parentWidth / 2) - (objWidth / 2);
+    scrollObj.scrollLeft = scrollLeft;
+    /*
+    const scrollObj = document.querySelector(".mainmenu");
+    console.log('scrollfield w: ', scrollObj.offsetWidth);
+    console.log('scrollpos: ', scrollObj.scrollLeft);
+    console.log('objpos: ', objToCenter.offsetLeft);
+    scrollObj.scrollLeft=objToCenter.offsetLeft - (objToCenter.offsetWidth * 2);
+    */
+  }
 
   //compares stored data with API-request:
   const compareDataWithApi = (element) => {

@@ -627,11 +627,12 @@ input[type='checkbox']:checked+label {
     overflow-x: auto;
     overflow-y: hidden;
 	  white-space: nowrap;
+    scroll-behavior: smooth;
   }
   .mainmenu ul {
     display: flex;
     flex-flow: row nowrap;
-    padding: .5em 1em;
+    padding: 1em 2em;
     gap: .5em 2em;
   }
   .mainmenu ul li {
@@ -641,7 +642,7 @@ input[type='checkbox']:checked+label {
     align-items: center;
   }
   .mainmenu ul li:last-child {
-    padding-right: 1em;
+    padding-right: 2em;
   }
   main {
     flex-flow: column nowrap;
