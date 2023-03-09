@@ -674,6 +674,17 @@ input[type='checkbox']:checked+label {
   h1 {
     font-size: var(--headerMedium);
   }
+  #movielist {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .card {
+    width: 150px;
+    height: 280px;
+  }
+  .card img {
+    width: 120px;
+    height: 180px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
