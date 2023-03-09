@@ -504,21 +504,15 @@ lastDataRequest = navBtnCollection[0].value;
     return compareDataWithApi(element.value);
   };
 
+  //Centers selected element based on calculation of parent object's padding & x-axis, & selected object's x-axis: 
   const centerSelectedButton = (objToCenter) => {
     const scrollObj = document.querySelector(".mainmenu");
-    const parentWidth = scrollObj.offsetWidth;
-    const objWidth = objToCenter.offsetWidth;
-    const objLeft = objToCenter.offsetLeft;
-    const objCenter = objLeft + (objWidth / 2);
-    const scrollLeft = objCenter - (parentWidth / 2) - (objWidth / 2);
-    scrollObj.scrollLeft = scrollLeft;
-    /*
-    const scrollObj = document.querySelector(".mainmenu");
-    console.log('scrollfield w: ', scrollObj.offsetWidth);
-    console.log('scrollpos: ', scrollObj.scrollLeft);
-    console.log('objpos: ', objToCenter.offsetLeft);
-    scrollObj.scrollLeft=objToCenter.offsetLeft - (objToCenter.offsetWidth * 2);
-    */
+    const sidePaddings = parseInt(document.defaultView.getComputedStyle(scrollObj.querySelector("ul") , "").getPropertyValue('padding-left'), 10) / 2;
+    const parentAxis = scrollObj.offsetWidth / 2;
+    const objAxis = objToCenter.offsetWidth / 2;
+    const objCenter = objToCenter.offsetLeft + (objAxis);
+    const scrollLeft = objCenter - (parentAxis + objAxis);
+    scrollObj.scrollLeft = scrollLeft + sidePaddings;
   }
 
   //compares stored data with API-request:
