@@ -33,6 +33,11 @@
   --hoverBoxShadeOuter: 0 0 10px #fff;
   --hoverBoxShadeInner: 0px 0px 10px 3px #000 inset;
 
+  --arrow-size: .3em;
+  --arrow-icon-col: #aaa;
+  --round-button-col: #aaa;
+  --round-button-bgcol: rgba(0,0,0,0.3);
+
   --linkCol: var(--txtCol);
   --hoverCol: var(--colorD);
 
@@ -276,10 +281,15 @@ footer p {
 .filterlist {
   width: 20%;
   height: fit-content;
-  padding: 2em 1em 3em 1em;
+  padding: 1em 1em 3em;
   background-color: var(--sectionBgColor);
   font-family: var(--headerFont);
   font-size: var(--headerSmall);
+  overflow: hidden;
+}
+
+#hide-show-filteroptions:checked ~ .filterlist {
+  height: fit-content;
 }
 
 .filterlist h2 {
@@ -294,6 +304,47 @@ footer p {
   display: block;
 }
 
+.filterlist > label:first-child {
+  display: none;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: 0;
+  background-color: var(--round-button-bgcol);
+  padding: .5em;
+  border-radius: 50%;
+  border: 2px solid var(--round-button-col);
+  transition: all .5s ease-in-out;
+}
+
+.filterlist > label:first-child:hover {
+  box-shadow: var(--hoverBoxShadeInner), var(--hoverBoxShadeOuter);
+  border-color: #fff;
+  --arrow-icon-col: #fff;
+}
+
+.filterlist > label:first-child[style*="display:none"] ~ .filterlist {
+  height: fit-content;
+}
+
+.arrow-icon {
+  border: solid var(--arrow-icon-col);
+  border-width: 0 var(--arrow-size) var(--arrow-size) 0;
+  display: inline-block;
+  padding: var(--arrow-size);
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transition: all .5s ease-in-out;
+}
+
+#hide-show-filteroptions:checked ~ .filterlist > label:first-child {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
 .filterlist p, #genreboxes, .form-group {
   width: 100%;
   display: flex;
@@ -302,10 +353,6 @@ footer p {
 }
 
 #sliders {
-  width: 100%;
-}
-
-.filterlist label {
   width: 100%;
 }
 
@@ -322,6 +369,10 @@ footer p {
 .filterlist span {
   width: fit-content;
   text-align: right;
+}
+
+.filterlist div, .filterlist fieldset {
+  opacity: 1;
 }
 
 .status-message {
@@ -564,9 +615,9 @@ input[type='checkbox']:checked+label {
   justify-content: center;
   align-items: center;
   color: #aaa;
-  background-color: rgba(0,0,0,0.3);
+  background-color: var(--round-button-bgcol);
   border-radius: 50%;
-  border: 2px solid #aaa;
+  border: 2px solid var(--round-button-col);
   float: right;
   font-size: 2em;
   width: 1em;
@@ -582,8 +633,7 @@ input[type='checkbox']:checked+label {
   filter: invert(100%);
 }
   
-.close-modal:hover,
-.close-modal:focus {
+.close-modal:hover, .close-modal:focus {
   color: #000;
   border-color: #000;
   text-decoration: none;
@@ -593,10 +643,39 @@ input[type='checkbox']:checked+label {
 }
 
 
+@media only screen and (max-width: 1300px) {
+  main {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .movie-list-section {
+    width: 100%;
+  }
+  #movielist {
+    justify-items: center;
+  }
+  .filterlist {
+    width: 100%;
+    padding-top: 2vh;
+    margin-bottom: 2em;
+    height: 100px;
+  }
+  .filterlist > label:first-child {
+    display: flex;
+  }
+  .filterlist div, .filterlist fieldset {
+    opacity: 0;
+  }
+  #hide-show-filteroptions:checked ~ .filterlist div, #hide-show-filteroptions:checked ~ .filterlist fieldset {
+    opacity: 1;
+    transition: opacity 3s;
+  }
+  h1 {
+    font-size: var(--headerMedium);
+  }
+}
 
-  
-
-  /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
   header {
     flex-flow: column nowrap;
@@ -644,17 +723,6 @@ input[type='checkbox']:checked+label {
   .mainmenu ul li:last-child {
     padding-right: 2em;
   }
-  main {
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-  .movie-list-section {
-    width: 100%;
-  }
-  #movielist {
-    justify-items: center;
-  }
   .moviedetails-block, .moviedetails-block dt, .moviedetails-block dd {
     width: 100%;
     text-align: left;
@@ -662,13 +730,5 @@ input[type='checkbox']:checked+label {
   }
   .moviedetails-block dt, .moviedetails-block dd {
     padding: 0 0 0 1em;
-   }
-  .filterlist {
-    width: 100%;
-    padding-top: 4vh;
-    margin-bottom: 2em;
-  }
-  h1 {
-    font-size: var(--headerMedium);
   }
 } 
